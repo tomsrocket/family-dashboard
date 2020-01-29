@@ -11,10 +11,14 @@
     integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
     crossorigin="anonymous"></script>
 
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    
+    
     <style>
       .timer {
-        width: 300px;
-        height: 300px;
+        width: 200px;
+        height: 200px;
         overflow: hidden;
         margin: 0 auto;
         position: relative;
@@ -70,7 +74,21 @@
       </style>
       <!-- toms design -->
       <style>
+        div {
+         font-family: 'Press Start 2P', cursive;
+        }
         .fd-box {height: 100%;}
+        #fd-tasks .todo img {
+          width:50px;
+          float:left;
+          margin-right:5px;
+        }
+        #fd-tasks .todo { clear: both; }
+        #fd-tasks .todo.done { background-color:white }
+        #fd-tasks .todo.done p { background-color:white }
+        .todo p {
+          text-shadow: 2px 2px  black;
+      }
       </style>
 
   </head>
@@ -79,7 +97,9 @@
         <div class="container">
           <div class="columns">
             <div class="column">
-              <div class="fd-box notification is-warning">
+              <div class="fd-box notification is-link">
+                <div id="datetime"></div>
+                <div id="clock"></div>
                 <div class="timer">
                   <svg class="rotate" viewbox="0 0 250 250">
                     <path id="loader" transform="translate(125, 125)"/>
@@ -95,7 +115,7 @@
               </div>
             </div>
             <div class="column">
-              <div class="fd-box notification is-danger">
+              <div id="weather" class="fd-box notification is-danger">
                 <img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />
               </div>
             </div>
@@ -119,7 +139,7 @@
 
 
 <script>
-var seconds = 1000;
+var seconds = 20*60;
 var doPlay = true;
 var loader = document.getElementById('loader')
   , α = 0
@@ -149,18 +169,53 @@ var seconds = document.getElementById('seconds');
 
 })();
 
+var clock = document.getElementById('clock');
+(function currentTime() {
+
+  var currentdate = new Date();
+  var datetime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+  clock.innerHTML= datetime;
+  setTimeout(currentTime, 1000); // Redraw
+
+})();
+
+
+
+  function resetWeather() {
+    $("#weather").html('<img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />');
+  }
 
   var taskList = [
-    ["Anziehen"],
-    ["Haare kämmen"],
-    ["Zähne Putzen"],
-    ["Jacke & Schuhe"],
-    ["Handschuhe"],
-    ["Helm"],
-  ];
+    ["Anziehen", "icon-shirt.svg", "chicken.gif"],
+    ["Haare kämmen", "icon-comb.svg"],
+    ["Zähne putzen", "icon-toothbrush.svg"],
+    ["Jacke", "icon-jacket.svg"],
+    ["Schuhe", "icon-shoes.svg"],
+    ["Hand- schuhe", "icon-gloves.svg"],
+    ["Mütze", "icon-snowhat.svg"],
+    ["Helm", "icon-helmet.svg", "jumpy.gif"],
+    ["Rucksack", "icon-bag.svg"],
+   ];
 
+  var datum = new Date();
+  wochentag=new Array("Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag","Samstag");
+
+  var weekday = wochentag[datum.getDay()];
+  var date = datum.getDate() +"."+ (datum.getMonth()+1)+"."+datum.getFullYear();
+  var dateElement = document.getElementById('datetime');
+  dateElement.innerHTML = weekday + " " + date;
+  
   taskList.forEach(function(item, index) {
-    $( "#fd-tasks" ).append( '<p>' + item[0] + '</p>' );
+    $( "#fd-tasks" ).append( '<div class="todo" data-taskId="' + index + '"><img src="images/' + item[1] +'" /><p class="button is-danger is-medium">' + item[0] + '</p></div>' );
+  })
+  $( "#fd-tasks .todo" ).click(function(ele){
+    $ele = $( this )
+    $ele.addClass( "done" );
+    var taskId = $ele.attr("data-taskId");
+    console.log("taskId", taskId)
+    var anim = taskList[taskId][2]
+    $("#weather").html('<img src="anims/' + (anim ? anim : 'tenor.gif') + '" />');
+    setTimeout(resetWeather, 2000);
   })
 </script>
 
