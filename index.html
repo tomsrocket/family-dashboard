@@ -6,10 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Familiendashboard</title>
     <link rel="stylesheet" href="bulma-start-0.0.3/css/main.css">
-    <script
-    src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-    integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
-    crossorigin="anonymous"></script>
+    <script src="lib/jquery-3.4.1.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
 
@@ -78,17 +75,13 @@
          font-family: 'Press Start 2P', cursive;
         }
         .fd-box {height: 100%;}
-        #fd-tasks .todo img {
-          width:50px;
-          float:left;
-          margin-right:5px;
-        }
+        #fd-tasks .todo img { width:50px; float:left; margin-right:5px; }
+        #fd-tasks .todo b { float: left;padding: 14px 2px 0 0; }
         #fd-tasks .todo { clear: both; }
         #fd-tasks .todo.done { background-color:white }
         #fd-tasks .todo.done p { background-color:white }
-        .todo p {
-          text-shadow: 2px 2px  black;
-      }
+        .todo p { text-shadow: 2px 2px  black; }
+        #weatherTemp {font-size:30px}
       </style>
 
   </head>
@@ -112,6 +105,8 @@
                   </div>
                 </div>
                 <div id="seconds">test</div>
+                <div id="weatherIcon">-</div>
+                <div id="weatherTemp">-</div>
               </div>
             </div>
             <div class="column">
@@ -139,45 +134,45 @@
 
 
 <script>
-var seconds = 20*60;
-var doPlay = true;
-var loader = document.getElementById('loader')
-  , α = 0
-  , π = Math.PI
-  , t = (seconds/360 * 1000);
-var seconds = document.getElementById('seconds');
+  var seconds = 20*60;
+  var doPlay = true;
+  var loader = document.getElementById('loader')
+    , α = 0
+    , π = Math.PI
+    , t = (seconds/360 * 1000);
+  var seconds = document.getElementById('seconds');
 
-(function draw() {
-  α++;
-  α %= 360;
-  var r = ( α * π / 180 )
-    , x = Math.sin( r ) * 125
-    , y = Math.cos( r ) * - 125
-    , mid = ( α > 180 ) ? 1 : 0
-    , anim = 'M 0 0 v -125 A 125 125 1 ' 
-           + mid + ' 1 ' 
-           +  x  + ' ' 
-           +  y  + ' z';
+  (function draw() {
+    α++;
+    α %= 360;
+    var r = ( α * π / 180 )
+      , x = Math.sin( r ) * 125
+      , y = Math.cos( r ) * - 125
+      , mid = ( α > 180 ) ? 1 : 0
+      , anim = 'M 0 0 v -125 A 125 125 1 ' 
+            + mid + ' 1 ' 
+            +  x  + ' ' 
+            +  y  + ' z';
 
-  seconds.innerHTML= "Rest: " + (360 - α);
+    seconds.innerHTML= "Rest: " + (360 - α);
 
-  loader.setAttribute( 'd', anim );
-  
-  if(doPlay){
-    setTimeout(draw, t); // Redraw
-  }
+    loader.setAttribute( 'd', anim );
+    
+    if(doPlay){
+      setTimeout(draw, t); // Redraw
+    }
 
-})();
+  })();
 
-var clock = document.getElementById('clock');
-(function currentTime() {
+  var clock = document.getElementById('clock');
+  (function currentTime() {
 
-  var currentdate = new Date();
-  var datetime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-  clock.innerHTML= datetime;
-  setTimeout(currentTime, 1000); // Redraw
+    var currentdate = new Date();
+    var datetime = currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+    clock.innerHTML= datetime;
+    setTimeout(currentTime, 2000); // Redraw
 
-})();
+  })();
 
 
 
@@ -186,15 +181,15 @@ var clock = document.getElementById('clock');
   }
 
   var taskList = [
-    ["Anziehen", "icon-shirt.svg", "chicken.gif"],
-    ["Haare kämmen", "icon-comb.svg"],
-    ["Zähne putzen", "icon-toothbrush.svg"],
-    ["Jacke", "icon-jacket.svg"],
-    ["Schuhe", "icon-shoes.svg"],
-    ["Hand- schuhe", "icon-gloves.svg"],
-    ["Mütze", "icon-snowhat.svg"],
-    ["Helm", "icon-helmet.svg", "jumpy.gif"],
-    ["Rucksack", "icon-bag.svg"],
+    ["Anziehen",      "icon-shirt.svg",     "chicken.gif"],
+    ["Haare kämmen",  "icon-comb.svg",      "monkey.gif"],
+    ["Zähne putzen",  "icon-toothbrush.svg","fox.gif"],
+    ["Jacke",         "icon-jacket.svg",    "snoopy.gif"],
+    ["Schuhe",        "icon-shoes.svg"],
+    ["Hand- schuhe",  "icon-gloves.svg",    "panda.gif"],
+    ["Mütze",         "icon-snowhat.svg"],
+    ["Helm",          "icon-helmet.svg",    "jumpy.gif"],
+    ["Rucksack",      "icon-bag.svg"],
    ];
 
   var datum = new Date();
@@ -206,7 +201,9 @@ var clock = document.getElementById('clock');
   dateElement.innerHTML = weekday + " " + date;
   
   taskList.forEach(function(item, index) {
-    $( "#fd-tasks" ).append( '<div class="todo" data-taskId="' + index + '"><img src="images/' + item[1] +'" /><p class="button is-danger is-medium">' + item[0] + '</p></div>' );
+    $( "#fd-tasks" ).append( 
+      '<div class="todo" data-taskId="' + index + '"><b>'
+      + (index+1) + '</b><img src="images/' + item[1] +'" /><p class="button is-danger is-medium">' + item[0] + '</p></div>' );
   })
   $( "#fd-tasks .todo" ).click(function(ele){
     $ele = $( this )
@@ -217,6 +214,30 @@ var clock = document.getElementById('clock');
     $("#weather").html('<img src="anims/' + (anim ? anim : 'tenor.gif') + '" />');
     setTimeout(resetWeather, 2000);
   })
+
+  $(document).keypress(function(event) {
+    var char = event.charCode;
+    if ((char >47) && (char < 58)) {
+      console.log('Handler for .keypress() called. - ' + char);
+      $("#fd-tasks .todo")[char-49].click();
+    }
+  });
+
+  $(function() {
+    console.log( "ready!" );
+    $.getJSON('https://api.met.no/weatherapi/locationforecast/1.9/.json?lat=51.8156514&lon=7.1770284', function(data) {
+        var symbol = data['product']['time'][1]['location']['symbol']['number'];
+        var temperature = data['product']['time'][0]['location']['temperature']['value']; 
+        console.log("temperature", temperature);
+        console.log("weather symbol", symbol);
+        $("#weatherIcon").html('<img src="https://api.met.no/weatherapi/weathericon/1.1/?symbol='+symbol+'&is_night=1&content_type=image/svg%2Bxml" />');
+        $("#weatherTemp").html(temperature);
+          
+      });
+  });
+
+
+  
 </script>
 
   </body>
