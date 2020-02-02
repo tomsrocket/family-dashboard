@@ -79,7 +79,7 @@
         .fd-box {height: 100%;}
         #fd-tasks .todo img { width:50px; float:left; margin-right:5px; }
         #fd-tasks .todo b { float: left;padding: 14px 2px 0 0; }
-        #fd-tasks .todo { clear: both; }
+        #fd-tasks .todo { clear: both; transition: all 0.5s ease;}
         #fd-tasks .todo.done { background-color:white }
         #fd-tasks .todo.done p { background-color:white }
         .todo p { text-shadow: 2px 2px  black; }
@@ -90,17 +90,63 @@
         #weatherIcon {float:left}
 
         #weather img {width:100%}
+
+
+        #playlist li {
+          overflow: hidden;
+          display: block;
+          height: 9px;
+          font-size: 7px;
+        }
+        #playlist li a {
+          text-decoration: none;
+        }
+        #playlist li.active {
+          color: white;
+          background-color:#333;
+        }
       </style>
 
   </head>
   <body>
     <section class="section">
-        <div class="container">
+        <div class="container-fluid">
           <div class="columns">
             <div class="column">
               <div class="notification is-link">
                 <div id="datetime"></div>
                 <div id="clock"></div> <div id="seconds">test</div>
+               
+              </div>
+              <div class="notification is-warning">
+                <div id="weatherIcon">-</div>
+                <div id="weatherTemp">-</div>
+              </div>
+
+              <div class="notification is-primary">
+                <!--iframe src="https://open.spotify.com/embed/playlist/0PftjfXOoTEFs4vbW9wjWE" 
+                  width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe -->
+
+                  <audio controls>
+                    <p>Your browser does not support the audio element </p>
+                  </audio>
+                  <ul id="playlist">
+                  </ul>
+                </div>
+            </div>
+            <div class="column">
+              <div id="weather" class="fd-box notification is-danger">
+                <img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />
+                <img src="https://www.yr.no/place/Germany/North_Rhine-Westphalia/M%C3%BCnster/meteogram.png" />
+              </div>
+            </div>
+            <div class="column is-4">
+              <div class="fd-box notification is-success">
+                <div id="fd-tasks"></div>
+              </div>
+            </div>
+            <div class="column is-2">
+              <div class="fd-box notification is-link is-light">
                 <div class="timer">
                   <svg class="rotate" viewbox="0 0 250 250">
                     <path id="loader" transform="translate(125, 125)"/>
@@ -112,30 +158,8 @@
                     <span class="time deg135"></span>
                   </div>
                 </div>
-              </div>
-              <div class="notification is-warning">
 
-                <div id="weatherIcon">-</div>
-                <div id="weatherTemp">-</div>
-                <!--iframe src="https://open.spotify.com/embed/playlist/0PftjfXOoTEFs4vbW9wjWE" 
-                  width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe -->
-
-                  <audio src="music/Dubmood - Breaker (Original Video game Soundtrack) (DATA080) - 02 Breaker A Movement 02.mp3" 
-                    controls autoplay loop>
-                    <p>Your browser does not support the audio element </p>
-                  </audio>
-
-                </div>
-            </div>
-            <div class="column">
-              <div id="weather" class="fd-box notification is-danger">
-                <img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />
-                <img src="https://www.yr.no/place/Germany/North_Rhine-Westphalia/M%C3%BCnster/meteogram.png" />
-              </div>
-            </div>
-            <div class="column">
-              <div class="fd-box notification is-success">
-                <div id="fd-tasks"></div>
+                
               </div>
             </div>
           </div>
