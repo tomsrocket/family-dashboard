@@ -96,6 +96,7 @@ background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 
         #weatherIcon img {margin: -40px 20px 0 0;}
         #weather img {width:100%}
 
+        .notification {  padding-right: 1.5rem } 
 
         #playlist li {
           overflow: hidden;
@@ -111,9 +112,15 @@ background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 
           background-color:#333;
         }
 
+
         .event b {
             margin: 5px 10px;
             display: inline-block;
+        }
+        .event i {
+          max-height: 10px;
+          display: inline-block;
+          overflow: hidden;
         }
         .event {
             background-color: #3273dc;
@@ -121,6 +128,10 @@ background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 
             font-size: 12px;
             border-radius: 5px;
         }
+        .event.cal-family {background-color:#aa0033}
+        .event.cal-geburtstage {background-color:#999900}
+
+        #events {display: none}
       </style>
 
   </head>
