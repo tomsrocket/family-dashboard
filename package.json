@@ -1,0 +1,24 @@
+{
+  "name": "family-dashboard",
+  "version": "1.0.0",
+  "description": "Our Family Dashboard.",
+  "main": "read-google-spreadsheet.js",
+  "dependencies": {
+    "our-groceries-client": "^0.1.65-pre"
+  },
+  "scripts": {
+    "dev": "cd public;python3 -m http.server 8000",
+    "generate": "node load-our-groceries.js;bash ./load-calender.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomsrocket/family-dashboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomsrocket/family-dashboard/issues"
+  },
+  "homepage": "https://github.com/tomsrocket/family-dashboard#readme"
+}
