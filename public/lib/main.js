@@ -21,7 +21,7 @@ class BigClockDisplay {
                 +  y  + ' z';
 
             
-        secondDiv.innerHTML= "Rest: " + (360 - α);
+        secondDiv.innerHTML= "- " + (360 - α);
 
         loader.setAttribute( 'd', anim );
         
@@ -52,7 +52,7 @@ class CurrentDateDisplay {
         var wochentag=new Array("Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag","Samstag");
         
         var weekday = wochentag[datum.getDay()];
-        var date = datum.getDate() +"."+ (datum.getMonth()+1)+"."+datum.getFullYear();
+        var date = datum.getDate() +"."+ (datum.getMonth()+1)+"." //+datum.getFullYear();
         var dateElement = document.getElementById('datetime');
         dateElement.innerHTML = weekday + " " + date;
     }
@@ -103,7 +103,7 @@ class TaskListDisplay {
             console.log("taskId", taskId)
             var anim = taskList[taskId][2]
             $("#weather").html('<img src="anims/' + (anim ? anim : 'tenor.gif') + '" />');
-            setTimeout(resetWeather, 2000);
+            setTimeout(resetWeather, 3000);
         })
         
         $(document).keypress(function(event) {
@@ -131,6 +131,9 @@ class AudioPlaylist {
         mp3Files.forEach(function(item, index) {
             $("#playlist").append('<li><a href="'
                 + mp3Dir + item + '">' + index + " " + item.substr(-30).replace(".mp3","") + '</a></li>')
+        })
+        $('#playlistContainer').click(function() {
+            $('#playlist').toggleClass('hidden');
         })
 
         init();
@@ -180,10 +183,12 @@ class EventCalendarDisplay {
         const today = new Date();
         var todayString = today.toISOString().substr(0,10);
 
-        function parseEventContent(content) {
-            var matches = content.match(/\(Sticker_([0-9a-z]+)\)/i);
-            console.log("matches", matches);
-            return matches ? content.replace(matches[0], '<img src="icon/' + matches[1] + '.png" />') : content;
+        function extractIconFromEvent(content) {
+            var matches = content.desc.match(/\(Sticker_([0-9a-z]+)\)/i);
+            if (matches) {
+                content.desc = content.desc.replace(matches[0], '');
+            }
+            return matches ? 'icon/' + matches[1] + '.png' : '';
         }
 
         function getNextDateOfEvent(event) {
@@ -222,9 +227,11 @@ class EventCalendarDisplay {
             });
         };
 
+
         await readCalendar('family');
         await readCalendar('geburtstage');
         await readCalendar('tom');
+        await readCalendar('kids');
 
         async function readCalendar(calendarFilename) {
             const data = await getData(calendarFilename)
@@ -237,7 +244,6 @@ class EventCalendarDisplay {
             
             // Fetch the VEVENT part
             var eventNr = 0;
-            var displayedEventsCounter = 0;
             var totalEventCounter = 0;
             
             do {
@@ -256,9 +262,6 @@ class EventCalendarDisplay {
                         }
                         
                         if (eventStartDate >= todayString) {
-                            displayedEventsCounter++;
-                            $('#events').append("<p>" + displayedEventsCounter + " " + eventStartDate + ":" + event.summary + " - " + event.description + "</p>");
-
                             const compareDate = (""+eventStartDate).substr(0,10);
                             nextDaysKeys.forEach(function(item, index) {
                                 if (compareDate == item) {
@@ -280,31 +283,42 @@ class EventCalendarDisplay {
             } while (rawEvent )
         }
 
+        /**
+         * paint next days
+         */
         console.log("nextDays", nextDays)
-
         var weekDays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
         Object.entries(nextDays).forEach(([key, daysEvents]) => {
             console.log(daysEvents);
 
             var eventDay = new Date(key);
-            console.log("date", eventDay )
             var dayString = weekDays[eventDay.getDay()] + ", " + eventDay.getDate() + "." + eventDay.getMonth() + ".";
-            
-            console.log("termine", daysEvents);
             var eventContent = '';
             if (daysEvents) {
                 daysEvents.forEach(function(event, index) {
-                    eventContent += '<div class="event cal-' + event.cal + '"><b><span>' + event.time + '</span> ' + event.title + '</b><i>' + event.desc+ '</i></div>'
+                    var calIcon = extractIconFromEvent(event); 
+                    eventContent += '<div class="event cal-' + event.cal + '"><b>'
+                        + (calIcon ? ('<img src="' + calIcon + '" />') : '')
+                        + '<span>' + event.time + '</span> ' 
+                        + event.title + '</b><i>' + event.desc+ '</i>'  
+                        + '</div>'
                 })
             }
             $("#nextDays").append(
-                '<div class="column"><div class="fd-box notification is-info">'
-                +'<b>' + dayString + '</b> '+ parseEventContent(eventContent)+ '</div></div>');
+                '<div class="column"><div class="fd-box fd-day notification is-info ' + (dayString.startsWith('S')? 'weekend' : '' )+ '">'
+                +'<b>' + dayString + '</b> '+ eventContent + '</div></div>');
         })
     
-        // Get start and end dates as local time on current machine
-        // console.log(event.startDate.toJSDate(), event.endDate.toJSDate());
+    }
+}
 
+class GroceriesList {
+    static start() {
+        $.getJSON('our-groceries.json', function(data) {
+            data.forEach(function(item, index) {
+                $("#shoppingList").append('<span>' + item.value + '</span>');
+            })
+        });
     }
 }
 
@@ -317,6 +331,7 @@ $(function() {
     CurrentWeatherDisplay.start();
     EventCalendarDisplay.start();
     AudioPlaylist.start();
+    GroceriesList.start();
 });
 
 

@@ -16,9 +16,9 @@
     
     <style>
       body {
-/* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#d8e0de+0,aebfbc+22,99afab+33,8ea6a2+50,829d98+67,4e5c5a+82,0e0e0e+100;Grey+3D */
-background: rgb(216,224,222); /* Old browsers */
-background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 22%,rgba(153,175,171,1) 33%,rgba(142,166,162,1) 50%,rgba(130,157,152,1) 67%,rgba(78,92,90,1) 82%,rgba(14,14,14,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#d8e0de+0,aebfbc+22,99afab+33,8ea6a2+50,829d98+67,4e5c5a+82,0e0e0e+100;Grey+3D */
+        background: rgb(216,224,222); /* Old browsers */
+        background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 22%,rgba(153,175,171,1) 33%,rgba(142,166,162,1) 50%,rgba(130,157,152,1) 67%,rgba(78,92,90,1) 82%,rgba(14,14,14,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
       }
       .timer {
         width: 200px;
@@ -88,19 +88,22 @@ background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 
         #fd-tasks .todo.done { background-color:white }
         #fd-tasks .todo.done p { background-color:white }
         .todo p { text-shadow: 2px 2px  black; }
-        #weatherTemp {font-size:30px}
+        #weatherTemp {font-size:25px}
 
         #clock {float:left;margin-right:15px}
         #timer {clear:both}
         #weatherIcon {float:left;}
-        #weatherIcon img {margin: -40px 20px 0 0;}
+        #weatherIcon img {width:80px;margin: -40px 20px 0 0;}
         #weather img {width:100%}
 
         /* override some strange bulma settings */
         .notification {  padding-right: 1.5rem }
         section.section {padding:1.5rem} 
 
-        
+        #playlist.hidden {
+          /* todo */
+          display:none;
+        }
         #playlist li {
           overflow: hidden;
           display: block;
@@ -115,7 +118,10 @@ background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 
           background-color:#333;
         }
 
-
+        .weekend {
+          background-image: linear-gradient(45deg, #B2A2CD 25%, #5F5370 25%, #5F5370 50%, #B2A2CD 50%, #B2A2CD 75%, #5F5370 75%, #5F5370 100%);
+          background-size: 56.57px 56.57px;
+        }
         .event b {
             margin: 5px 10px;
             display: inline-block;
@@ -131,10 +137,26 @@ background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 
             font-size: 12px;
             border-radius: 5px;
         }
+        .event img {
+            width: 50px;
+            float: right;
+        }
         .event.cal-family {background-color:#aa0033}
         .event.cal-geburtstage {background-color:#999900}
+        .event.cal-kids {background-color:#009900}
         .event span {color:#bbb;}
         #events {display: none}
+
+        .fd-day > b, 
+        #shoppingList span { display: block; text-shadow: 2px 2px  black; }
+
+        .muenster-pin {
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          top: 12%;
+          left: 50%;
+        }
       </style>
 
   </head>
@@ -143,40 +165,11 @@ background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 
         <div class="container-fluid">
           <div class="columns">
             <div class="column">
-              <div class="notification is-link">
+              <div class="notification is-link has-text-centered">
+
                 <div id="datetime"></div>
                 <div id="clock"></div> <div id="seconds">test</div>
-               
-              </div>
-              <div class="notification is-warning">
-                <div id="weatherIcon">-</div>
-                <div id="weatherTemp">-</div>
-              </div>
 
-              <div class="notification is-primary">
-                <!--iframe src="https://open.spotify.com/embed/playlist/0PftjfXOoTEFs4vbW9wjWE" 
-                  width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe -->
-
-                  <audio controls>
-                    <p>Your browser does not support the audio element </p>
-                  </audio>
-                  <ul id="playlist">
-                  </ul>
-                </div>
-            </div>
-            <div class="column">
-              <div id="weather" class="fd-box notification is-danger">
-                <img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />
-                <img src="https://www.yr.no/place/Germany/North_Rhine-Westphalia/M%C3%BCnster/meteogram.png" />
-              </div>
-            </div>
-            <div class="column is-4">
-              <div class="fd-box notification is-success">
-                <div id="fd-tasks"></div>
-              </div>
-            </div>
-            <div class="column is-2">
-              <div class="fd-box notification is-link is-light">
                 <div class="timer">
                   <svg class="rotate" viewbox="0 0 250 250">
                     <path id="loader" transform="translate(125, 125)"/>
@@ -188,28 +181,50 @@ background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 
                     <span class="time deg135"></span>
                   </div>
                 </div>
+               
+              </div>
+              <div class="notification is-warning">
+                <div id="weatherIcon">-</div>
+                <div id="weatherTemp">-</div>
+              </div>
 
-                
+              <div id="playlistContainer" class="notification is-primary">
+                <!--iframe src="https://open.spotify.com/embed/playlist/0PftjfXOoTEFs4vbW9wjWE" 
+                  width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe -->
+
+                  <audio controls>
+                    <p>Your browser does not support the audio element </p>
+                  </audio>
+                  <ul id="playlist" class="hidden">
+                  </ul>
+                </div>
+            </div>
+            <div class="column">
+              <div id="weather" class="fd-box notification is-danger">
+                <div class="muenster-pin"><img src="icon/pin.png" /></div>
+                <img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />
+                <img src="https://www.yr.no/place/Germany/North_Rhine-Westphalia/M%C3%BCnster/meteogram.png" />
+              </div>
+            </div>
+            <div class="column is-4">
+              <div class="fd-box notification is-success">
+                <div id="fd-tasks"></div>
+              </div>
+            </div>
+            <div class="column is-2">
+              <div class="fd-box notification is-link is-light">
+   
+                <div id="shoppingList"></div>
+              
               </div>
             </div>
           </div>
           <div class="columns" id="nextDays">
             
           </div>
-          <div class="columns">
-            <div class="column">
-              <div class="fd-box notification is-info">
-                Termine
-                <div id="events"></div>
-              </div>
-            </div>
-          </div>
 
         </div>
     </section>
-
-            https://nostalgic-css.github.io/NES.css/
-
 
 <script>
  
