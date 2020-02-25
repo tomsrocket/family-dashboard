@@ -249,7 +249,7 @@ class EventCalendarDisplay {
             do {
                 try {
                     totalEventCounter++;
-                    var rawEvent = jCalData[2][4 + eventNr];
+                    var rawEvent = jCalData[2][1 + eventNr];
                     if (rawEvent) {
                         var comp = new ICAL.Component(rawEvent);
                         var event = new ICAL.Event(comp);
@@ -289,6 +289,14 @@ class EventCalendarDisplay {
         console.log("nextDays", nextDays)
         var weekDays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
         Object.entries(nextDays).forEach(([key, daysEvents]) => {
+            
+            daysEvents.sort(function(a, b){
+                var x = a.time;
+                var y = b.time;
+                if (x < y) {return -1;}
+                if (x > y) {return 1;}
+                return 0;
+            });
             console.log(daysEvents);
 
             var eventDay = new Date(key);
