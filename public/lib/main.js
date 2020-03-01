@@ -74,8 +74,9 @@ class CurrentWeatherDisplay {
 class TaskListDisplay {
     static start() {
 
-        function resetWeather() {
-            $("#weather").html('<img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />');
+        function hideModal() {
+            $("#gifModal").removeClass('is-active');
+            $("#gifAnim").attr('src', '');
         }
         
         var taskList = [
@@ -85,9 +86,9 @@ class TaskListDisplay {
             ["Jacke",         "icon-jacket.svg",    "snoopy.gif"],
             ["Schuhe",        "icon-shoes.svg",     "cat.gif"],
             ["Hand- schuhe",  "icon-gloves.svg",    "panda.gif"],
-            ["Mütze",         "icon-snowhat.svg"],
-            ["Helm",          "icon-helmet.svg",    "jumpy.gif"],
-            ["Rucksack",      "icon-bag.svg"],
+            ["Mütze",         "icon-snowhat.svg",   "muetze.webp"],
+            ["Helm",          "icon-helmet.svg",    "helmet.webp"],
+            ["Rucksack",      "icon-bag.svg",       "backpack.webp"],
         ];
         
         
@@ -102,15 +103,16 @@ class TaskListDisplay {
             var taskId = $ele.attr("data-taskId");
             console.log("taskId", taskId)
             var anim = taskList[taskId][2]
-            $("#weather").html('<img src="anims/' + (anim ? anim : 'tenor.gif') + '" />');
-            setTimeout(resetWeather, 3000);
+            $("#gifAnim").attr('src', 'anims/' + (anim ? anim : 'tenor.gif'));
+            $("#gifModal").addClass('is-active');
+            setTimeout(hideModal, 3000);
         })
         
         $(document).keypress(function(event) {
             var char = event.charCode;
             if ((char >47) && (char < 58)) {
-            console.log('Handler for .keypress() called. - ' + char);
-            $("#fd-tasks .todo")[char-49].click();
+                console.log('Handler for .keypress() called. - ' + char);
+                $("#fd-tasks .todo")[char-49].click();
             }
         });
   
