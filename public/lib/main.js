@@ -184,6 +184,7 @@ class EventCalendarDisplay {
 
         const today = new Date();
         var todayString = today.toISOString().substr(0,10);
+        var countdownEvents = [];
 
         function extractIconFromEvent(content) {
             var matches = content.desc.match(/\(Sticker_([0-9a-z]+)\)/i);
@@ -212,7 +213,7 @@ class EventCalendarDisplay {
         var otherDay = new Date(today)
         otherDay.setDate(otherDay.getDate() - 1);
         var i; 
-        for ( i=0; i<4; i++ ) {
+        for ( i=0; i<3; i++ ) {
             otherDay.setDate(otherDay.getDate() + 1)
             var day = otherDay.toISOString().substr(0,10);
             nextDays[day] = [];
@@ -238,7 +239,7 @@ class EventCalendarDisplay {
         async function readCalendar(calendarFilename) {
             const data = await getData(calendarFilename)
 
-            console.log("done reading "+calendarFilename+".ics")
+            console.log("done wgetting "+calendarFilename+".ics")
 
             // Get the basic data out
             var jCalData = ICAL.parse(data);
@@ -265,6 +266,16 @@ class EventCalendarDisplay {
                         
                         if (eventStartDate >= todayString) {
                             const compareDate = (""+eventStartDate).substr(0,10);
+                            if (event.description && (("" + event.description).indexOf('(Countdown)') >= 0)) {
+                                console.log("countdown", compareDate, event.description)
+                                console.log("event", comp);
+                                var created = comp.getFirstPropertyValue("created").toICALString();
+                                countdownEvents.push({
+                                    date: compareDate, 
+                                    title: event.summary,
+                                    created: created.substr(0,4) + "-" + created.substr(4,2) + "-" + created.substr(6,2)
+                                });
+                            }
                             nextDaysKeys.forEach(function(item, index) {
                                 if (compareDate == item) {
                                     nextDays[item].push({ 
@@ -318,7 +329,7 @@ class EventCalendarDisplay {
                 '<div class="column"><div class="fd-box fd-day notification is-info ' + (dayString.startsWith('S')? 'weekend' : '' )+ '">'
                 +'<b>' + dayString + '</b> '+ eventContent + '</div></div>');
         })
-    
+        return countdownEvents;
     }
 }
 
@@ -332,16 +343,38 @@ class GroceriesList {
     }
 }
 
-$(function() {
+class Countdowns {
+    static start(countdowns) {
+
+        console.log("countdowns", countdowns)
+
+        countdowns.forEach(function(item, index) {
+            var today = new Date();
+            var rangeStart = new Date(item.created);
+            var rangeEnd = new Date(item.date);
+            var msPerDay = 24 * 60 * 60 * 1000;
+            var timeLeft = Math.floor((rangeEnd.getTime() - today.getTime()) / msPerDay);
+            var totalDays = Math.floor((rangeEnd.getTime() - rangeStart.getTime()) / msPerDay);
+            var percent = Math.floor((totalDays-timeLeft)/totalDays * 100)
+            console.log("countdown", percent, timeLeft, totalDays)
+            $("#countdowns").append(item.title + ' ' + timeLeft + 'd <progress class="progress is-success" value="'+percent+'" max="100">'+percent+'%</progress>')
+
+        })
+
+    }
+}
+
+$(async function() {
     console.log( "ready!" );
     BigClockDisplay.start();
     CurrentTimeDisplay.start();
     TaskListDisplay.start();
     CurrentDateDisplay.start();
     CurrentWeatherDisplay.start();
-    EventCalendarDisplay.start();
+    var countdownEvents = await EventCalendarDisplay.start();
     AudioPlaylist.start();
     GroceriesList.start();
+    Countdowns.start(countdownEvents);
 });
 
 
