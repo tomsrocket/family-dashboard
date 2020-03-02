@@ -1,0 +1,13 @@
+{
+    "our_groceries": {
+        "username": "development",
+        "password": "mypass",
+        "lists": [
+            "Einkaufen", 
+            "ToDo"
+        ]
+    },
+    "ics_calendars": {
+
+    }
+}
