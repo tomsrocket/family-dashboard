@@ -335,10 +335,14 @@ class EventCalendarDisplay {
 
 class GroceriesList {
     static start() {
-        $.getJSON('our-groceries.json', function(data) {
-            data.forEach(function(item, index) {
-                $("#shoppingList").append('<span>' + item.value + '</span>');
-            })
+        var lists = ["ToDo", "Einkaufen"];
+        lists.forEach(function(listName, index) {
+            $.getJSON('cal/'+ listName.toLowerCase() +'.json', function(data) {
+                $("#shoppingList").append('<div class="shoppingHeadline">' + listName + '</div>');
+                data.forEach(function(item, index) {
+                    $("#shoppingList").append('<span>' + item.value + '</span>');
+                });
+            });
         });
     }
 }
