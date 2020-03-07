@@ -99,13 +99,15 @@ class TaskListDisplay {
         })
         $( "#fd-tasks .todo" ).click(function(ele){
             var $ele = $( this )
-            $ele.addClass( "done" );
-            var taskId = $ele.attr("data-taskId");
-            console.log("taskId", taskId)
-            var anim = taskList[taskId][2]
-            $("#gifAnim").attr('src', 'anims/' + (anim ? anim : 'tenor.gif'));
-            $("#gifModal").addClass('is-active');
-            setTimeout(hideModal, 3000);
+            if (!$ele.hasClass( "done" )) {
+                $ele.addClass( "done" );
+                var taskId = $ele.attr("data-taskId");
+                console.log("taskId", taskId)
+                var anim = taskList[taskId][2]
+                $("#gifAnim").attr('src', 'anims/' + (anim ? anim : 'tenor.gif'));
+                $("#gifModal").addClass('is-active');
+                setTimeout(hideModal, 3000);
+            }
         })
         
         $(document).keypress(function(event) {
