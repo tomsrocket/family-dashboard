@@ -4,8 +4,10 @@
         "password": "mypass",
         "lists": [
             "Einkaufen", 
-            "ToDo"
-        ]
+            "ToDo",
+            "Haushalt"
+        ],
+        "listWithTimers": "Haushalt"
     },
     "ics_calendars": {
 
