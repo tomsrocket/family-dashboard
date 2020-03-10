@@ -68,7 +68,7 @@ function getList(listName) {
                 // then they will be automatically crossed off, and the date when the item was crossed off will be saved in the hash
                 if (listWithTimers && (listWithTimers == listName)) {
                     if (item.crossedOff) {
-                        item["date"] = oldTimers[item.id].date
+                        item["date"] = (oldTimers[item.id] && ("date" in oldTimers[item.id])) ? oldTimers[item.id].date : todayString;
                     } else {
                         client.crossOff(item.id, list.id, handlers.crossOffComplete);
                         item["date"] = todayString;    
