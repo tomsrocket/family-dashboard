@@ -81,11 +81,11 @@ class TaskListDisplay {
         
         var taskList = [
             ["Anziehen",      "icon-shirt.svg",     "chicken.gif"],
-            ["Haare kämmen",  "icon-comb.svg",      "monkey.gif"],
-            ["Zähne putzen",  "icon-toothbrush.svg","fox.gif"],
+            ["Kämmen",        "icon-comb.svg",      "monkey.gif"],
+            ["Zähne",         "icon-toothbrush.svg","fox.gif"],
             ["Jacke",         "icon-jacket.svg",    "snoopy.gif"],
             ["Schuhe",        "icon-shoes.svg",     "cat.gif"],
-            ["Hand- schuhe",  "icon-gloves.svg",    "panda.gif"],
+            ["Handschuh",     "icon-gloves.svg",    "panda.gif"],
             ["Mütze",         "icon-snowhat.svg",   "muetze.webp"],
             ["Helm",          "icon-helmet.svg",    "helmet.webp"],
             ["Rucksack",      "icon-bag.svg",       "backpack.webp"],
@@ -337,12 +337,20 @@ class EventCalendarDisplay {
 
 class GroceriesList {
     static start() {
-        var lists = ["ToDo", "Einkaufen"];
+        var lists = ["ToDo", "Einkaufen", "Haushalt"];
         lists.forEach(function(listName, index) {
             $.getJSON('cal/'+ listName.toLowerCase() +'.json', function(data) {
                 $("#shoppingList").append('<div class="shoppingHeadline">' + listName + '</div>');
                 data.forEach(function(item, index) {
-                    $("#shoppingList").append('<span>' + item.value + '</span>');
+                    var display = item.value;
+                    if ("date" in item) {
+                        const today = new Date();
+                        const rangeEnd = new Date(item.date);
+                        const msPerDay = 24 * 60 * 60 * 1000;
+                        const timeLeft = Math.floor((today.getTime() - rangeEnd.getTime()) / msPerDay);
+                        display = timeLeft + "d " + display;                        
+                    }
+                    $("#shoppingList").append('<span>' + display + '</span>');
                 });
             });
         });
