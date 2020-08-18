@@ -70,7 +70,37 @@ class CurrentWeatherDisplay {
         });        
     }
 }
+class StundenplanDisplay {
+    static start() {
+        var stundenplan = [
+            ["Englisch",    "Englisch",     "Sport",      "Sport",    "Bio",  "-",    "Mathe", "Mathe"],
+            ["Reli",        "Reli",         "Kunst",      "Kunst",    "Deutsch",  "Deutsch"   ],
+            ["Deutsch",     "Deutsch",      "Erdkunde", "Erdkunde",   "Bio",    '-',    "Englisch (LZ)",    "Englisch (LZ)"],
+            ["Musik",       "Musik",        "Mathe",      "Mathe",    "Deutsch","-",    "Deutsch (LZ)",     "Soziales Lernen"],
+            ["Sport",       "Sport",        "Mathe",      "Info",    "Englisch",  "Englisch"],
+        ];
+        var d = new Date();
+        var day = d.getDay();
 
+        console.log("DAY", day);
+
+        if ((day >0) && (day < 6)) {
+            const heute = stundenplan[0+day-1];
+            console.log("HEUTE", heute)
+            heute.forEach(function(item,index) {
+                var color = 'is-dark';
+                if (item == '-') {
+                    color='is-warning'
+                }
+                $("#stundenplan").append(
+                    '<div class="column"><div class="fd-box notification '+color+'">'
+                    + '<img src="icon/s-' + item.toLowerCase() + '.png" onerror="this.style.display=\'none\'" />'
+                    + item
+                    + '</div></div>');
+            });
+        }
+    }
+}
 class TaskListDisplay {
     static start() {
 
@@ -85,9 +115,10 @@ class TaskListDisplay {
             ["Zähne",         "icon-toothbrush.svg","fox.gif"],
             ["Jacke",         "icon-jacket.svg",    "snoopy.gif"],
             ["Schuhe",        "icon-shoes.svg",     "cat.gif"],
-            ["Handschuh",     "icon-gloves.svg",    "panda.gif"],
-            ["Mütze",         "icon-snowhat.svg",   "muetze.webp"],
+//            ["Handschuh",     "icon-gloves.svg",    "panda.gif"],
+//            ["Mütze",         "icon-snowhat.svg",   "muetze.webp"],
             ["Helm",          "icon-helmet.svg",    "helmet.webp"],
+            ["Maske",         "icon-facemask.svg",    "mask-horse.webp"],
             ["Rucksack",      "icon-bag.svg",       "backpack.webp"],
         ];
         
@@ -388,6 +419,7 @@ $(async function() {
     var countdownEvents = await EventCalendarDisplay.start();
     AudioPlaylist.start();
     GroceriesList.start();
+    StundenplanDisplay.start();
     Countdowns.start(countdownEvents);
 });
 
