@@ -11,7 +11,7 @@ sleep 10
 
 echo `date +%Y-%m-%d:%H:%M:%S`' Starting Browser in Background' &>> /home/pi/actionlog.log
 # chromium-browser ---incognito --kiosk http://fdash.input23.de
-firefox 'http://fdash.input23.de?'`date +%s` &
+firefox 'http://URL?'`date +%s` &
 
 
 echo `date +%Y-%m-%d:%H:%M:%S`' Wait 90 min' &>> /home/pi/actionlog.log
