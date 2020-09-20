@@ -81,8 +81,6 @@ class StundenplanDisplay {
     static show(elementId, stundenplan) {
         var d = new Date();
         var day = d.getDay();
-        day=1
-        console.log("DAY", day);
 
         if ((day >0) && (day < 6)) {
             const heute = stundenplan[0+day-1];
