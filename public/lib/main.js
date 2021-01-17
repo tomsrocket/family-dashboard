@@ -81,22 +81,26 @@ class StundenplanDisplay {
     static show(elementId, stundenplan) {
         var d = new Date();
         var day = d.getDay();
+        var weekDays = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag'];
 
-        if ((day >0) && (day < 6)) {
-            const heute = stundenplan[0+day-1];
-            console.log("HEUTE", heute)
-            heute.forEach(function(item,index) {
-                var color = 'is-dark';
-                if (item == '-') {
-                    color='is-warning'
-                }
-                $(elementId).append(
-                    '<div class="column"><div class="fd-box notification '+color+'">'
-                    + '<img src="icon/s-' + item.toLowerCase() + '.png" onerror="this.style.display=\'none\'" />'
-                    + item
-                    + '</div></div>');
-            });
+        if (!((day >0) && (day < 6))) {
+            day = 1
         }
+        const heute = stundenplan[0+day-1];
+        const day_display = '(' + weekDays[0+day-1] + ')'
+        console.log("HEUTE", day_display, heute)
+        $('.stundenplan_tag').html(day_display)
+        heute.forEach(function(item,index) {
+            var color = 'is-dark';
+            if (item == '-') {
+                color='is-warning'
+            }
+            $(elementId).append(
+                '<div class="column"><div class="fd-box notification '+color+'">'
+                + '<img src="icon/s-' + item.toLowerCase() + '.png" onerror="this.style.display=\'none\'" />'
+                + item
+                + '</div></div>');
+        });
     }
 
 }
@@ -125,7 +129,7 @@ class TaskListDisplay {
         taskList.forEach(function(item, index) {
             $( "#fd-tasks" ).append(
             '<div class="todo" data-taskId="' + index + '"><b>'
-            + (index+1) + '</b><img src="images/' + item[1] +'" /><p class="button is-danger is-medium">' + item[0] + '</p></div>' );
+            + (index+1) + '</b><img src="images/' + item[1] +'" /><p class="button is-danger">' + item[0] + '</p></div>' );
         })
         $( "#fd-tasks .todo" ).click(function(ele){
             var $ele = $( this )

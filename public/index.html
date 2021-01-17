@@ -27,7 +27,7 @@
         div {
          font-family: 'Press Start 2P', cursive;
         }
-        .fd-box {height: 100%;}
+        .fd-box {height: 100%;font-size:0.8em}
         #fd-tasks .todo img { width:50px; float:left; margin-right:5px; }
         #fd-tasks .todo b { float: left;padding: 14px 2px 0 0; }
         #fd-tasks .todo { clear: both; transition: all 0.5s ease;}
@@ -128,18 +128,30 @@
         <div class="container-fluid">
           <div class="columns">
             <div class="column is-3">
-              <div class="notification is-link has-text-centered">
-
+              <div class="notification fd-box is-link has-text-centered">
                 <div id="datetime"></div>
                 <div id="clock"></div>
                 <div id="seconds">
                   <div class="timer-pin">|<img src="icon/children-crossing.png" /></div>
                   <progress id="mainTimer" class="progress is-danger" value="20" max="60"></progress>
                 </div>
-
-
-
               </div>
+            </div>
+            <div class="column  is-9">
+              <div class="notification fd-box is-link has-text-centered">
+                <img src="https://www.yr.no/place/Germany/North_Rhine-Westphalia/M%C3%BCnster/meteogram.png" />
+              </div>
+            </div>
+          </div>
+
+          <div class="columns">
+            <div class="column is-4">
+
+              <div id="weather" class="notification is-danger">
+                <div class="muenster-pin"><img src="icon/pin.png" /></div>
+                <img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />
+              </div>
+
               <div class="notification is-warning">
                 <div id="weatherIcon">-</div>
                 <div id="weatherTemp">-</div>
@@ -149,29 +161,21 @@
                 <!--iframe src="https://open.spotify.com/embed/playlist/0PftjfXOoTEFs4vbW9wjWE"
                   width="300" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe -->
 
-                  <audio controls>
-                    <p>Your browser does not support the audio element </p>
-                  </audio>
-                  <ul id="playlist" class="hidden">
-                  </ul>
-                </div>
-            </div>
-
-            <div class="column is-3">
-              <div id="weather" class="fd-box notification is-danger">
-                <div class="muenster-pin"><img src="icon/pin.png" /></div>
-                <img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />
-                <img src="https://www.yr.no/place/Germany/North_Rhine-Westphalia/M%C3%BCnster/meteogram.png" />
+                <audio controls>
+                  <p>Your browser does not support the audio element </p>
+                </audio>
+                <ul id="playlist" class="hidden">
+                </ul>
               </div>
             </div>
 
-            <div class="column is-3">
+            <div class="column is-4">
               <div class="fd-box notification is-success">
                 <div id="fd-tasks"></div>
               </div>
             </div>
 
-            <div class="column is-3">
+            <div class="column is-4">
               <div class="fd-box notification is-link is-light">
 
                 <div id="shoppingList"></div>
@@ -186,10 +190,10 @@
               </div>
             </div>
           </div>
-          Stundenplan Mila:
+          Stundenplan Mila <span class="stundenplan_tag"></span>:
           <div class="columns stundenplan" id="stundenplan_m">
           </div>
-          Stundenplan Wencke:
+          Stundenplan Wencke <span class="stundenplan_tag"></span>:
           <div class="columns stundenplan" id="stundenplan_w">
           </div>
         </div>
