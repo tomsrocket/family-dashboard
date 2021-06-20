@@ -47,12 +47,12 @@ class CurrentDateDisplay {
 
 class CurrentWeatherDisplay {
     static start() {
-        $.getJSON('https://api.met.no/weatherapi/locationforecast/1.9/.json?lat=51.8156514&lon=7.1770284', function(data) {
-            var symbol = data['product']['time'][1]['location']['symbol']['number'];
-            var temperature = data['product']['time'][0]['location']['temperature']['value'];
+        $.getJSON('https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=51.8156514&lon=7.1770284', function(data) {
+            var symbol = data['properties']['timeseries'][0]['data']['next_6_hours']['summary']['symbol_code'];
+            var temperature = data['properties']['timeseries'][0]['data']['instant']['details']['air_temperature'];
             console.log("temperature", temperature);
             console.log("weather symbol", symbol);
-            $("#weatherIcon").html('<img src="https://api.met.no/weatherapi/weathericon/1.1/?symbol='+symbol+'&is_night=1&content_type=image/svg%2Bxml" />');
+            $("#weatherIcon").html('<img src="/images/weather-symbols-metno/'+symbol+'.svg" />');
             $("#weatherTemp").html(temperature + "°C");
         });
     }
@@ -223,6 +223,10 @@ class EventCalendarDisplay {
         var countdownEvents = [];
 
         function extractIconFromEvent(content) {
+            if (!content.desc) {
+                console.log("Warning: Content without field: 'desc':", content)
+                return '';
+            }
             var matches = content.desc.match(/\(Sticker_([0-9a-z]+)\)/i);
             if (matches) {
                 content.desc = content.desc.replace(matches[0], '');
@@ -284,14 +288,14 @@ class EventCalendarDisplay {
             // Fetch the VEVENT part
             var eventNr = 0;
             var totalEventCounter = 0;
-
+            var event = null;
             do {
                 try {
                     totalEventCounter++;
                     var rawEvent = jCalData[2][1 + eventNr];
                     if (rawEvent) {
                         var comp = new ICAL.Component(rawEvent);
-                        var event = new ICAL.Event(comp);
+                        event = new ICAL.Event(comp);
 
                         var eventStartDate = event.startDate;
                         if (event.isRecurring()) {
@@ -330,6 +334,9 @@ class EventCalendarDisplay {
                     console.log("err", totalEventCounter, err)
                 }
             } while (rawEvent )
+
+            console.log("events parsed: ", totalEventCounter)
+            console.log("last event: ", event)
         }
 
         /**
