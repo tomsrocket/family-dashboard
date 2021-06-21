@@ -38,7 +38,7 @@
 
         #ddclock {float:left;margin-right:15px}
         #weatherIcon {float:left;}
-        #weatherIcon img {width:80px;margin: -40px 20px 0 0;}
+        #weatherIcon img {width:80px;margin: -20px 20px 0 0;}
         #weather img {width:100%}
 
         /* override some strange bulma settings */
@@ -201,11 +201,20 @@
           </div>
 
           <!-- Daily Photo from Bing -->
-          <div class="columns" id="photo">
+          <div class="columns">
             <div class="column">
-              <div class="fd-box fd-day notification is-link" id="countdowns">
+              <div class="fd-box fd-day notification is-link">
                 <span id="daily-caption"></span>
                 <div id="daily-image"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Daily Flachwitz -->
+          <div class="columns">
+            <div class="column">
+              <div class="fd-box fd-day notification is-link" id="flachwitz">
+                <span id="daily-joke"></span>
               </div>
             </div>
           </div>

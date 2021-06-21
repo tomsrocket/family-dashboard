@@ -212,6 +212,13 @@ class AudioPlaylist {
     }
 }
 
+function getData(ajaxurl) {
+    return $.ajax({
+        url: ajaxurl,
+        type: 'GET',
+    });
+};
+
 /**
  * Holy cow .. it's not easy to find out if recurring ical events are happening today
  */
@@ -262,22 +269,13 @@ class EventCalendarDisplay {
         const nextDaysKeys = Object.keys(nextDays);
         console.log("nextDaysKeys", nextDaysKeys);
 
-        function getData(cc) {
-            const ajaxurl = "cal/"+cc+".ics"
-            return $.ajax({
-                url: ajaxurl,
-                type: 'GET',
-            });
-        };
-
-
         await readCalendar('family');
         await readCalendar('geburtstage');
         await readCalendar('tom');
         await readCalendar('kids');
 
         async function readCalendar(calendarFilename) {
-            const data = await getData(calendarFilename)
+            const data = await getData("cal/"+calendarFilename+".ics")
 
             console.log("done wgetting "+calendarFilename+".ics")
 
@@ -405,10 +403,25 @@ class DailyImage {
             const ihost = 'https://bing.com'
             const dimage = ihost + ipath
             const dcaption = data['images'][0]['title']
+            const dcopy = data['images'][0]['copyright']
 
             $("#daily-caption").html(dcaption);
-            $("#daily-image").html('<img src="' + dimage + '" />');
+            $("#daily-image").html('<img src="' + dimage + '" title="'+ dcopy +'" />');
         });
+    }
+}
+class DailyJoke {
+    // Dies crasht irgendwann weil es derzeit weniger Witze als Tage im Jahr gibt
+    static async start() {
+        const data = await getData('cal/flachwitze.txt')
+        const lines = data.split("\n")
+        var now = new Date();
+        var start = new Date(now.getFullYear(), 0, 0);
+        var diff = now - start;
+        var oneDay = 1000 * 60 * 60 * 24;
+        var day = Math.floor(diff / oneDay);
+        console.log('Day of year: ' + day);
+        $("#daily-joke").html(lines[day]);
     }
 }
 class Countdowns {
@@ -445,6 +458,7 @@ $(async function() {
     StundenplanDisplay.start();
     Countdowns.start(countdownEvents);
     DailyImage.start();
+    DailyJoke.start();
 });
 
 
