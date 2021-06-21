@@ -397,7 +397,20 @@ class GroceriesList {
         });
     }
 }
+class DailyImage {
+    static start() {
+        $.getJSON('/cal/daily-photo.json', function(data) {
+            console.log("bing", data)
+            const ipath = data['images'][0]['url']
+            const ihost = 'https://bing.com'
+            const dimage = ihost + ipath
+            const dcaption = data['images'][0]['title']
 
+            $("#daily-caption").html(dcaption);
+            $("#daily-image").html('<img src="' + dimage + '" />');
+        });
+    }
+}
 class Countdowns {
     static start(countdowns) {
 
@@ -431,6 +444,7 @@ $(async function() {
     GroceriesList.start();
     StundenplanDisplay.start();
     Countdowns.start(countdownEvents);
+    DailyImage.start();
 });
 
 
