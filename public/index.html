@@ -38,7 +38,7 @@
 
         #ddclock {float:left;margin-right:15px}
         #weatherIcon {float:left;}
-        #weatherIcon img {width:80px;margin: -20px 20px 0 0;}
+        #weatherIcon img {width: 80px;margin: -15px 20px 0 0;background-color: white;border-radius: 10px;}
         #weather img {width:100%}
 
         /* override some strange bulma settings */
@@ -128,13 +128,17 @@
         <div class="container-fluid">
           <div class="columns">
             <div class="column is-3">
-              <div class="notification fd-box is-link has-text-centered">
+              <div class="notification is-link has-text-centered">
                 <div id="datetime"></div>
                 <div id="clock"></div>
                 <div id="seconds">
                   <div class="timer-pin">|<img src="icon/children-crossing.png" /></div>
                   <progress id="mainTimer" class="progress is-danger" value="20" max="60"></progress>
                 </div>
+              </div>
+              <div class="notification is-info">
+                <div id="weatherIcon"></div>
+                <div id="weatherTemp"></div>
               </div>
             </div>
             <div class="column  is-9">
@@ -150,11 +154,6 @@
               <div id="weather" class="notification is-danger">
                 <div class="muenster-pin"><img src="icon/pin.png" /></div>
                 <img src="https://www.dwd.de/DWD/wetter/radar/radfilm_nrw_akt.gif" />
-              </div>
-
-              <div class="notification is-warning">
-                <div id="weatherIcon">-</div>
-                <div id="weatherTemp">-</div>
               </div>
 
               <div id="playlistContainer" class="notification is-primary">
@@ -200,20 +199,17 @@
           <div class="columns stundenplan" id="stundenplan_w">
           </div>
 
-          <!-- Daily Photo from Bing -->
           <div class="columns">
-            <div class="column">
+            <!-- Daily Photo from Bing -->
+            <div class="column is-9">
               <div class="fd-box fd-day notification is-link">
                 <span id="daily-caption"></span>
                 <div id="daily-image"></div>
               </div>
             </div>
-          </div>
-
-          <!-- Daily Flachwitz -->
-          <div class="columns">
-            <div class="column">
-              <div class="fd-box fd-day notification is-link" id="flachwitz">
+            <!-- Daily Flachwitz -->
+            <div class="column is-3">
+              <div class="fd-day notification is-link" id="flachwitz">
                 <span id="daily-joke"></span>
               </div>
             </div>
