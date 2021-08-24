@@ -60,20 +60,20 @@ class CurrentWeatherDisplay {
 class StundenplanDisplay {
     static start() {
         var stundenplan = [
-            ["Englisch",    "Englisch",     "Sport",      "Sport",    "Bio",  "-",    "Mathe", "Mathe"],
-            ["Reli",        "Reli",         "Kunst",      "Kunst",    "Deutsch",  "Deutsch"   ],
-            ["Deutsch",     "Deutsch",      "Erdkunde", "Erdkunde",   "Bio",    '-',    "Englisch (LZ)",    "Englisch (LZ)"],
-            ["Musik",       "Musik",        "Mathe",      "Mathe",    "Deutsch","-",    "Deutsch (LZ)",     "Soziales Lernen"],
-            ["Sport",       "Sport",        "Mathe",      "Info",    "Englisch",  "Englisch"],
+            ["Englisch",    "Englisch",     "Mathe",     "Info",    "Sport",    "Sport",    "-", "Mathe"],
+            ["Deutsch",     "Deutsch",      "Kunst",     "Kunst",   "Geschi",   "Geschi",  ],
+            ["Mathe",       "Mathe",        "Bio",       "Bio",     "Physik",   "Physik",   "-", "Deutsch"],
+            ["Reli",        "Reli",         "Englisch",  "Englisch","Deutsch",  "Deutsch",  "-", "Englisch"],
+            ["Sport",       "Musik",        "Politik",   "Politik", "Mathe",    "Mathe",   ],
         ];
         StundenplanDisplay.show("#stundenplan_m", stundenplan);
 
         stundenplan = [
-            ["X",           "Mathe",        "X",        "Reli",    "-" ],
-            ["Reli",        "Sport",        "X",        "Mathe",    "Sport"   ],
-            ["X",           "X",            "X",        "X",       "-"],
-            ["X",           "Sport",        "Musik",    "Mathe",   "-"],
-            ["X",           "X",            "Mathe",    "Sport",   "-"],
+            ["X",        "X",            "Mathe",    "X",    "-" ],
+            ["Sport",    "Mathe",        "X",        "X",    "X"   ],
+            ["X",        "X",            "X",        "X",    "Instrumente"],
+            ["Mathe",    "X",            "Sport",    "X",    "X"],
+            ["X",        "Orchester",    "X",        "Mathe","Sport"],
         ];
         StundenplanDisplay.show("#stundenplan_w", stundenplan);
     }
