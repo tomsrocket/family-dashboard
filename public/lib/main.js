@@ -60,11 +60,11 @@ class CurrentWeatherDisplay {
 class StundenplanDisplay {
     static start() {
         var stundenplan = [
-            ["Geschi",    "Geschi",     "D",        "D",      "Mathe",    "Mathe",    "-",    "E-L"], // Montag
-            ["Mathe",     "Mathe",      "PK",       "PK",     "SP",       "SP",        ], // Dienstag
-            ["E5",        "E5",         "Reli",     "Reli",   "D",        "D",        "-",    "M-L"], //...
-            ["M",         "IFG",        "KU",       "KU",     "BI",       "BI",       "-",    "D-L"],
-            ["PH",        "PH",         "E5",       "E5",     "SP",       "MU",       ],
+            ["Geschi",    "Geschi",     "Deutsch",  "Deutsch",      "Mathe",    "Mathe",    "-",    "E-L"], // Montag
+            ["Mathe",     "Mathe",      "Politik",  "Politik",      "Sport",       "Sport",        ], // Dienstag
+            ["Englisch",  "Englisch",   "Reli",     "Reli",         "Deutsch",        "Deutsch",        "-",    "M-L"], //...
+            ["Mathe",     "Info",       "Kunst",    "Kunst",        "Bio",       "Bio",       "-",    "D-L"],
+            ["Physik",    "Physik",     "Englisch", "Englisch",     "Sport",       "Musik",       ],
         ];
         StundenplanDisplay.show("#stundenplan_m", stundenplan);
 
