@@ -37,7 +37,6 @@
         #weatherTemp {font-size:25px}
 
         #ddclock {float:left;margin-right:15px}
-        #weatherIcon {float:left;}
         #weatherIcon img {width: 80px;margin: -15px 20px 0 0;background-color: white;border-radius: 10px;}
         #weather img {width:100%}
 
@@ -137,13 +136,21 @@
                 </div>
               </div>
               <div class="notification is-info">
-                <div id="weatherIcon"></div>
-                <div id="weatherTemp"></div>
+                <div class="columns">
+                  <div class="column">
+                    <div id="weatherIcon"></div>
+                  </div>
+                  <div class="column">
+                    <div id="weatherTemp"></div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="column  is-9">
               <div class="notification fd-box is-link has-text-centered">
-                <img src="https://www.yr.no/place/Germany/North_Rhine-Westphalia/M%C3%BCnster/meteogram.png" />
+                <div style="overflow:hidden;">
+                  <img style="margin-top:-80px" src="https://www.yr.no/nb/innhold/2-2867543/meteogram.svg" />
+                </div>
               </div>
             </div>
           </div>
