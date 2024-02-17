@@ -60,20 +60,21 @@ class CurrentWeatherDisplay {
 class StundenplanDisplay {
     static start() {
         var stundenplan = [
-            ["Geschi",    "Geschi",     "Deutsch",  "Deutsch",      "Mathe",    "Mathe",    "-",    "E-L"], // Montag
-            ["Mathe",     "Mathe",      "Politik",  "Politik",      "Sport",       "Sport",        ], // Dienstag
-            ["Englisch",  "Englisch",   "Reli",     "Reli",         "Deutsch",        "Deutsch",        "-",    "M-L"], //...
-            ["Mathe",     "Info",       "Kunst",    "Kunst",        "Bio",       "Bio",       "-",    "D-L"],
-            ["Physik",    "Physik",     "Englisch", "Englisch",     "Sport",       "Musik",       ],
+            // 1            2               3           4         5           6       7       8           9
+            ["Deutsch",   "Sport",      "Kunst",    "Kunst",      "LZ-S",    "D-L",   "-",   "Geschi", "Geschi" ], // Montag
+            ["Sport",     "Sport",      "Englisch", "Englisch",   "Bio",     "Bio",      ],               // Dienstag
+            ["Deutsch",   "Deutsch",    "Spanisch", "Spanisch",   "Englisch","E-L",   "-",   "SozL"], //...
+            ["Chemie",    "Chemie",     "Reli",     "Reli",       "Mathe",   "M-L",   "-",   "PK", "PK" ],
+            ["Erdkunde",  "Erdkunde",   "Mathe",    "Mathe",      "Spanisch","Spanisch"       ],
         ];
         StundenplanDisplay.show("#stundenplan_m", stundenplan);
 
         stundenplan = [
-            ["X",        "X",            "Mathe",    "X",    "-" ],
-            ["Sport",    "Mathe",        "X",        "X",    "X"   ],
-            ["X",        "X",            "X",        "X",    "Instrumente"],
-            ["Mathe",    "X",            "Sport",    "X",    "X"],
-            ["X",        "Orchester",    "X",        "Mathe","Sport"],
+            ["X",        "X",            "X",        "Mathe",       "Reli"  ],
+            ["X",        "X",            "X",        "X",           "X"     ],
+            ["X",        "X",            "X",        "Instrumente", "Mathe",    "Sport" ],
+            ["Musik",    "Mathe",        "Mathe",    "Sport",       "Sport" ],
+            ["Mathe",    "Orchester",    "Reli",     "X",           "X",        "X"     ],
         ];
         StundenplanDisplay.show("#stundenplan_w", stundenplan);
     }
@@ -183,7 +184,9 @@ class AudioPlaylist {
             console.log("tracks", tracks)
             var len = tracks.length - 1;
             //audio[0].volume = .10;
-            run(tracks.first(), audio[0]);
+            if (location.href.indexOf("nosound") == -1) {
+                run(tracks.first(), audio[0]);
+            }
             playlist.find('a').click(function(e){
                 e.preventDefault();
                 var link = $(this);
@@ -388,6 +391,10 @@ class GroceriesList {
                         const msPerDay = 24 * 60 * 60 * 1000;
                         const timeLeft = Math.floor((today.getTime() - rangeEnd.getTime()) / msPerDay);
                         display = timeLeft + "d " + display;
+                    } else {
+                        if ("crossedOffAt" in item) {
+                            return false;
+                        }
                     }
                     $("#shoppingList").append('<span>' + display + '</span>');
                 });
