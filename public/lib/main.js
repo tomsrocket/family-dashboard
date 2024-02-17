@@ -172,7 +172,7 @@ class AudioPlaylist {
 
         mp3Files.forEach(function(item, index) {
             $("#playlist").append('<li><a href="'
-                + mp3Dir + item + '">' + index + " " + item.substr(-30).replace(".mp3","") + '</a></li>')
+                + mp3Dir + item + '">' + index + " " + item.substring(-30).replace(".mp3","") + '</a></li>')
         })
         $('#playlistContainer').click(function() {
             $('#playlist').toggleClass('hidden');
@@ -232,7 +232,7 @@ class EventCalendarDisplay {
     static async start() {
 
         const today = new Date();
-        var todayString = today.toISOString().substr(0,10);
+        var todayString = today.toISOString().substring(0,10);
         var countdownEvents = [];
 
         function extractIconFromEvent(content) {
@@ -253,7 +253,7 @@ class EventCalendarDisplay {
 
             for (; next; next = iter.next()) {
                 var occurrence = event.getOccurrenceDetails(next);
-                if ((""+occurrence.startDate).substr(0,10) >= todayString) {
+                if ((""+occurrence.startDate).substring(0,10) >= todayString) {
                     return (""+occurrence.startDate);
                 }
             }
@@ -268,7 +268,7 @@ class EventCalendarDisplay {
         var i;
         for ( i=0; i<3; i++ ) {
             otherDay.setDate(otherDay.getDate() + 1)
-            var day = otherDay.toISOString().substr(0,10);
+            var day = otherDay.toISOString().substring(0,10);
             nextDays[day] = [];
         }
         console.log(nextDays);
@@ -309,7 +309,7 @@ class EventCalendarDisplay {
                         }
 
                         if (eventStartDate >= todayString) {
-                            const compareDate = (""+eventStartDate).substr(0,10);
+                            const compareDate = (""+eventStartDate).substring(0,10);
                             if (event.description && (("" + event.description).indexOf('(Countdown)') >= 0)) {
                                 console.log("countdown", compareDate, event.description)
                                 console.log("event", comp);
@@ -317,14 +317,15 @@ class EventCalendarDisplay {
                                 countdownEvents.push({
                                     date: compareDate,
                                     title: event.summary,
-                                    created: created.substr(0,4) + "-" + created.substr(4,2) + "-" + created.substr(6,2)
+                                    created: created.substring(0,4) + "-" + created.substr(4,2) + "-" + created.substr(6,2)
                                 });
                             }
                             nextDaysKeys.forEach(function(item, index) {
                                 if (compareDate == item) {
+                                    const localDate = new Date((""+eventStartDate));
                                     nextDays[item].push({
                                             cal: calendarFilename,
-                                            time: (""+eventStartDate).substring(11,16),
+                                            time: (localDate.toLocaleTimeString('de-DE').substring(0,5)),
                                             title: event.summary,
                                             desc: event.description
                                         }
