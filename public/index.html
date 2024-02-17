@@ -6,120 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Familiendashboard</title>
     <link rel="stylesheet" href="lib/bulma.css">
+    <link rel="stylesheet" href="lib/main.css">
     <script src="lib/jquery-3.4.1.min.js"></script>
     <script src="lib/ical.min.js"></script>
     <script src="lib/main.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAC0tPoAAAAAANvb/wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEREREREREREREREQAREREREREQAiEREREREQAiIhEREREQAiIiIREREQAiIiIiEREQAiIiIiIhERAiIiIiIiERECIiIiIjIREQIiIRIjIhERECIRESIhERERERERERERERERERERERERERERERERERERERERERERERERERERERH+fwAA/D8AAPgfAADwDwAA4AcAAMADAACAAQAAgAEAAIABAACAAQAAwYMAAOPHAAD//wAA//8AAP//AAD//wAA" rel="icon" type="image/x-icon" />
-
-
-    <style>
-      body {
-        /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#d8e0de+0,aebfbc+22,99afab+33,8ea6a2+50,829d98+67,4e5c5a+82,0e0e0e+100;Grey+3D */
-        background: rgb(216,224,222); /* Old browsers */
-        background: linear-gradient(135deg,  rgba(216,224,222,1) 0%,rgba(174,191,188,1) 22%,rgba(153,175,171,1) 33%,rgba(142,166,162,1) 50%,rgba(130,157,152,1) 67%,rgba(78,92,90,1) 82%,rgba(14,14,14,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-      }
-
-      </style>
-      <!-- toms design -->
-      <style>
-        div {
-         font-family: 'Press Start 2P', cursive;
-        }
-        .fd-box {height: 100%;font-size:0.8em}
-        #fd-tasks .todo img { width:50px; float:left; margin-right:5px; }
-        #fd-tasks .todo b { float: left;padding: 14px 2px 0 0; }
-        #fd-tasks .todo { clear: both; transition: all 0.5s ease;}
-        #fd-tasks .todo.done { background-color:white }
-        #fd-tasks .todo.done p { background-color:white }
-        .todo p { text-shadow: 2px 2px  black; }
-        #weatherTemp {font-size:25px}
-
-        #ddclock {float:left;margin-right:15px}
-        #weatherIcon img {width: 80px;margin: -15px 20px 0 0;background-color: white;border-radius: 10px;}
-        #weather img {width:100%}
-
-        /* override some strange bulma settings */
-        .notification {  padding-right: 1.5rem }
-        section.section {padding:1.5rem}
-
-        #playlist.hidden {
-          /* todo */
-          display:none;
-        }
-        #playlist li {
-          overflow: hidden;
-          display: block;
-          height: 9px;
-          font-size: 7px;
-        }
-        #playlist li a {
-          text-decoration: none;
-        }
-        #playlist li.active {
-          color: white;
-          background-color:#333;
-        }
-
-        .weekend {
-          background-image: linear-gradient(45deg, #B2A2CD 25%, #5F5370 25%, #5F5370 50%, #B2A2CD 50%, #B2A2CD 75%, #5F5370 75%, #5F5370 100%);
-          background-size: 56.57px 56.57px;
-        }
-        .event b {
-            margin: 5px 10px;
-            display: inline-block;
-        }
-        .event i {
-          max-height: 10px;
-          display: inline-block;
-          overflow: hidden;
-        }
-        .event {
-            background-color: #3273dc;
-            margin: 10px 0 0 0;
-            font-size: 12px;
-            border-radius: 5px;
-        }
-        .event img {
-            width: 50px;
-            float: right;
-        }
-        .event.cal-family {background-color:#aa0033}
-        .event.cal-geburtstage {background-color:#999900}
-        .event.cal-kids {background-color:#009900}
-        .event span {color:#bbb;}
-        #events {display: none}
-
-        .fd-day > b,
-        #shoppingList span { display: block; text-shadow: 2px 2px  black; }
-        .shoppingHeadline {color:black;margin-top:20px}
-        #shoppingList{margin-top:-20px}
-
-        #seconds {margin:10px 0 50px 0}
-        .timer-pin {
-          position: absolute;
-          margin-top: 12px;
-          left: 45%;
-          width:40px;
-        }
-        .timer-pin img {margin-top:-6px}
-
-        .muenster-pin {
-          position: absolute;
-          width: 30px;
-          height: 30px;
-          top: 12%;
-          left: 50%;
-        }
-        .stundenplan .notification {
-          padding:5px 1rem;
-        }
-        .stundenplan img {
-          width: 40px;
-          margin-right: 5px;
-        }
-      </style>
 
   </head>
   <body>
