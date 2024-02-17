@@ -90,6 +90,7 @@ class StundenplanDisplay {
         const heute = stundenplan[0+day-1];
         const day_display = '(' + weekDays[0+day-1] + ')'
         console.log("HEUTE", day_display, heute)
+        var stunde_nr = 1;
         $('.stundenplan_tag').html(day_display)
         heute.forEach(function(item,index) {
             var color = 'is-dark';
@@ -97,10 +98,12 @@ class StundenplanDisplay {
                 color='is-warning'
             }
             $(elementId).append(
-                '<div class="column"><div class="fd-box notification '+color+'">'
+                '<div class="column"><div class="fd-box notification ' + color + '">'
+                + '<div class="std-pln">'
+                + '<b>' + (stunde_nr++) + '</b>'
                 + '<img src="icon/s-' + item.toLowerCase() + '.png" onerror="this.style.display=\'none\'" />'
                 + item
-                + '</div></div>');
+                + '</div></div></div>');
         });
     }
 
@@ -321,7 +324,7 @@ class EventCalendarDisplay {
                                 if (compareDate == item) {
                                     nextDays[item].push({
                                             cal: calendarFilename,
-                                            time: (""+eventStartDate).substr(11,5),
+                                            time: (""+eventStartDate).substring(11,16),
                                             title: event.summary,
                                             desc: event.description
                                         }
@@ -357,7 +360,7 @@ class EventCalendarDisplay {
             console.log(daysEvents);
 
             var eventDay = new Date(key);
-            var dayString = weekDays[eventDay.getDay()] + ", " + eventDay.getDate() + "." + eventDay.getMonth() + ".";
+            var dayString = weekDays[eventDay.getDay()] + ", " + eventDay.getDate() + "." + (eventDay.getMonth()+1) + ".";
             var eventContent = '';
             if (daysEvents) {
                 daysEvents.forEach(function(event, index) {
@@ -365,7 +368,7 @@ class EventCalendarDisplay {
                     eventContent += '<div class="event cal-' + event.cal + '"><b>'
                         + (calIcon ? ('<img src="' + calIcon + '" />') : '')
                         + '<span>' + event.time + '</span> '
-                        + event.title + '</b><i>' + event.desc+ '</i>'
+                        + event.title + '</b><i>' + (event.desc ? event.desc:"") + '</i>'
                         + '</div>'
                 })
             }
