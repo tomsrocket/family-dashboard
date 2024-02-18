@@ -1,12 +1,32 @@
 # Family-Dashboard
 
-A family web dashboard that runs on our screen in the kitchen in the morning.
+A family dashboard to run on a screen in the kitchen in the morning, showing all relevant information about the current day. Pure HTML & Javascript. Plus cronjob scripts to read Google calendar and ToDoList data.
+
+![Example screenshot of family dashboard](preview/screenshot3.jpg)
+
+Features:
+* rain radar
+* weather diagram
+* vacation countdown
+* class schedule
+* calendar next 3 days (google calendar)
+* to do list (using "OurGroceries" app api)
+* picture of the day
+* joke of the day
+* musicplayer
+* interactive "cross-off"-list
+* cleaning roster
 
 ## Hardware
 * Old Intel NUC Mini PC, running Ubuntu linux, booting directly into a firefox instance in kiosk mode, showing the dashboard.
 * Shelly Socket, turns on the PC before we get up, and turns it off when everybody went to school, work, etc.
 * Old Monitor, displays the dashboard.
 
+## Software
+* HTML
+* Bulma CSS Framework
+* JQuery
+* Cronjobs: 1x bash shell, 1x node.js
 
 # Documentation
 
