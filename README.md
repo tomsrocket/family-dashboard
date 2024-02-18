@@ -48,7 +48,20 @@ These might help:
     https://peter.sh/experiments/chromium-command-line-switches/
 
 
+## Configuration
+
+This is a solo hobby project and I started making this configurable, but right now some config is still in arrays inside the *main.js* file.
+
+* See the `*.dist` files in the main directory, and adjust them to your needs, then remove ".dist" from the filename
+* See the file `lib/main.js` for Tasklist and Stundenplan config, and change them as needed.
+
 # Development
+
+Start dev server:
+
+    cd public
+    php -S localhost:8000
+
 
 ## Add item to "check-off"-list
 
@@ -65,8 +78,9 @@ Das Array mit den Dateinamen der Musik-Playlist kann man mit folgendem Befehl ge
 
 ## Flachwitze-Liste
 
-Die gibt's hier: https://github.com/derphilipp/Flachwitze
-Bei Gelegenheit mal einen PR stellen und weitere hinzufügen
+    cal/flachwitze.txt
+
+License is GPL 3.0, source is: https://github.com/derphilipp/Flachwitze
 
 ## Weiterführende Links
 

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# put your google calendar urls in here
+wget -O public/cal/family.ics https://calendar.google.com/calendar/ical/asdfasdf%40group.calendar.google.com/private-asdfasf/basic.ics
+wget -O public/cal/geburtstage.ics https://calendar.google.com/calendar/ical/asdf%40group.calendar.google.com/private-efefe/basic.ics
+wget -O public/cal/tom.ics https://calendar.google.com/calendar/ical/asdf.wee/fefef-asdf/basic.ics
+wget -O public/cal/kids.ics https://calendar.google.com/calendar/ical/asdf%40group.calendar.google.com/private-2332ffee/basic.ics
+
+# load daily photo from bing
+wget -O public/cal/daily-photo.json 'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=de-DE'
