@@ -120,3 +120,19 @@ Images used for the TODO-List
 * toothbrush-icon: Stockio.com - https://www.stockio.com/free-icon/bathroom-icons-toothbrush
 * Icons: helmet, face-mask: Icon made by Freepik from www.flaticon.com - https://www.flaticon.com/free-icon/vifking-helmet_499260
 * Other icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+
+
+# Read spotify songs
+
+**Prepare values in config.js:**
+
+1. Register a spotify app to read your recently played songs.\
+  Go to https://developer.spotify.com click your name in the top right, then "dashboard", and create a new app that can use the "Web API". You'll receive a *client_id, client_secret*. Enter those into `config.json`.
+
+2. Get your refresh_token: 
+  ```bash
+  npm init -y
+  npm install express axios querystring
+  node spotify_create_token.js
+  ```
+  Then enter the refresh_token into `config.json`.
