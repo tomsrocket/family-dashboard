@@ -60,21 +60,21 @@ class CurrentWeatherDisplay {
 class StundenplanDisplay {
     static start() {
         var stundenplan = [
-            // 1            2               3           4         5           6       7       8           9
-            ["Deutsch",   "Sport",      "Kunst",    "Kunst",      "LZ-S",    "D-L",   "-",   "Geschi", "Geschi" ], // Montag
-            ["Sport",     "Sport",      "Englisch", "Englisch",   "Bio",     "Bio",      ],               // Dienstag
-            ["Deutsch",   "Deutsch",    "Spanisch", "Spanisch",   "Englisch","E-L",   "-",   "SozL"], //...
-            ["Chemie",    "Chemie",     "Reli",     "Reli",       "Mathe",   "M-L",   "-",   "PK", "PK" ],
-            ["Erdkunde",  "Erdkunde",   "Mathe",    "Mathe",      "Spanisch","Spanisch"       ],
+            // 1            2               3           4         5           6       7       8      9
+            ["SP",         "SP",      "BI/CH",    "BI/CH",      "M-L",    "E5",     "-",   "MU",   "MU" ], // Montag
+            ["E5",         "E5",      "Spanisch", "Spanisch",         "PK",     "PK",      ],               // Dienstag
+            ["PH",         "PH",      "M",        "SP",        "D",   "D-L",   "-",   "?",   "?"], //...
+            ["GE",    "GE",  "Reli",  "Reli",       "CH",   "CH",   "-",   "BI/CH", "BI/CH" ],
+            ["M",     "M",   "D",     "D",      "Spanisch","Spanisch"       ],
         ];
         StundenplanDisplay.show("#stundenplan_m", stundenplan);
 
         stundenplan = [
-            ["X",        "X",            "X",        "Mathe",       "Reli"  ],
-            ["X",        "X",            "X",        "X",           "X"     ],
-            ["X",        "X",            "X",        "Instrumente", "Mathe",    "Sport" ],
-            ["Musik",    "Mathe",        "Mathe",    "Sport",       "Sport" ],
-            ["Mathe",    "Orchester",    "Reli",     "X",           "X",        "X"     ],
+            ["Sport",     "Kunst",    "Kunst",     "Deutsch",        "Lernberatung",       "Naturw.",  "Naturw."  ],
+            ["Lernzeit",  "Musik",    "Musik",     "Naturw.",        "Naturw."   ],
+            ["Lernzeit",  "Englisch", "Mathe",     "Naturw.",        "Deutsch",    "AG",     "AG" ],
+            ["Lernzeit",  "Technik",  "Technik",   "Rat",            "Englisch",   "Reli",   "Reli" ],
+            ["Lernzeit",  "Sport",    "Sport",     "me/you/we",      "Mathe"     ],
         ];
         StundenplanDisplay.show("#stundenplan_w", stundenplan);
     }
@@ -122,10 +122,10 @@ class TaskListDisplay {
             ["Zähne",         "icon-toothbrush.svg","fox.gif"],
             ["Jacke",         "icon-jacket.svg",    "snoopy.gif"],
             ["Schuhe",        "icon-shoes.svg",     "cat.gif"],
-//            ["Handschuh",     "icon-gloves.svg",    "panda.gif"],
-//            ["Mütze",         "icon-snowhat.svg",   "muetze.webp"],
-            ["Helm",          "icon-helmet.svg",    "helmet.webp"],
-            ["Maske",         "icon-facemask.svg",    "mask-horse.webp"],
+            ["Turnbeutel", "icon-gloves.svg",    "panda.gif"],
+            ["Haargummi",  "icon-snowhat.svg",   "muetze.webp"],
+//            ["Helm",          "icon-helmet.svg",    "helmet.webp"],
+//            ["Maske",         "icon-facemask.svg",    "mask-horse.webp"],
             ["Rucksack",      "icon-bag.svg",       "backpack.webp"],
         ];
 
@@ -383,7 +383,7 @@ class EventCalendarDisplay {
 
 class GroceriesList {
     static start() {
-        var lists = ["ToDo", "Haushalt"];  // "Einkaufen" gets too long, temporarily remove it
+        var lists = ["ToDo", "Unternehmungen"];  // , "Einkaufen" "Einkaufen" gets too long, remove it
         lists.forEach(function(listName, index) {
             $.getJSON('cal/'+ listName.toLowerCase() +'.json', function(data) {
                 $("#shoppingList").append('<div class="shoppingHeadline">' + listName + '</div>');
@@ -470,6 +470,7 @@ $(async function() {
     Countdowns.start(countdownEvents);
     DailyImage.start();
     DailyJoke.start();
+    initButtons(function() {window.location.href = "page3.html";}, 
+      function() {window.location.href = "page2.html";}
+    )
 });
-
-

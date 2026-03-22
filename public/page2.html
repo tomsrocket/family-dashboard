@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Familiendashboard - Seite 2</title>
+    <script src="lib/common.js"></script>
+
+    <link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAC0tPoAAAAAANvb/wD///8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEREREREREREREREQAREREREREQAiEREREREQAiIhEREREQAiIiIREREQAiIiIiEREQAiIiIiIhERAiIiIiIiERECIiIiIjIREQIiIRIjIhERECIRESIhERERERERERERERERERERERERERERERERERERERERERERERERERERERH+fwAA/D8AAPgfAADwDwAA4AcAAMADAACAAQAAgAEAAIABAACAAQAAwYMAAOPHAAD//wAA//8AAP//AAD//wAA" rel="icon" type="image/x-icon" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+  </head>
+  <body class="bg-dark text-white">
+
+<div class="container py-4">
+  <h2 class="mb-4">Zuletzt gespielt</h2>
+  <div id="spotify-list" class="row g-3"></div>
+</div>
+<script>
+
+async function loadSpotify() {
+  try {
+    const res = await fetch('data/spotify.json');
+    const data = await res.json();
+
+    const container = document.getElementById('spotify-list');
+    container.innerHTML = '';
+
+    data.forEach(track => {
+      const date = new Date(track.played_at);
+
+      const formattedDate = date.toLocaleString('de-DE', {
+        hour: '2-digit',
+        minute: '2-digit',
+        day: '2-digit',
+        month: '2-digit'
+      });
+
+      const card = document.createElement('div');
+      card.className = 'col-12 col-md-6 col-lg-4';
+
+      card.innerHTML = `
+        <div class="card bg-secondary text-white h-100 shadow-sm">
+          <div class="row g-0">
+            <div class="col-4">
+              <img src="${track.cover}" class="img-fluid rounded-start" alt="cover">
+            </div>
+            <div class="col-8">
+              <div class="card-body p-2">
+                <h6 class="card-title mb-1">${track.song}</h6>
+                <p class="card-text mb-1 text-light small">${track.artist}</p>
+                <p class="card-text">
+                  <small class="text-muted">${formattedDate}</small>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+  } catch (err) {
+    console.error('Fehler beim Laden:', err);
+  }
+}
+
+// initial laden
+loadSpotify();
+
+// optional: auto-refresh alle 1 Minuten
+setInterval(loadSpotify, 60000);
+
+initButtons(function() {window.location.href = "index.html";}, 
+  function() {window.location.href = "page3.html";}
+)
+
+
+</script>
+</body>
+</html>
