@@ -1,4 +1,7 @@
 {
+    "deploy":  {
+      "remotepath": "butler@james.test:/home/user/project_path" 
+    },
     "our_groceries": {
         "username": "development",
         "password": "mypass",

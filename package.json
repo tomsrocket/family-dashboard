@@ -4,11 +4,15 @@
   "description": "Our Family Dashboard.",
   "main": "read-google-spreadsheet.js",
   "dependencies": {
-    "our-groceries-client": "^0.1.65-pre"
+    "axios": "^1.13.6",
+    "express": "^5.2.1",
+    "our-groceries-client": "^0.1.65-pre",
+    "querystring": "^0.2.1",
+    "requests": "^0.3.0"
   },
   "scripts": {
     "dev": "cd public;python3 -m http.server 8000",
-    "generate": "node load-our-groceries.js;bash ./load-calender.sh"
+    "generate": "bash ./cronjob.sh"
   },
   "repository": {
     "type": "git",
@@ -20,5 +24,6 @@
   "bugs": {
     "url": "https://github.com/tomsrocket/family-dashboard/issues"
   },
-  "homepage": "https://github.com/tomsrocket/family-dashboard#readme"
+  "homepage": "https://github.com/tomsrocket/family-dashboard#readme",
+  "type": "commonjs"
 }

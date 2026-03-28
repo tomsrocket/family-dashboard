@@ -1,9 +1,9 @@
-//var OurGroceriesClient = require('our-groceries-client');
+// var OurGroceriesClient = require('our-groceries-client');
 
-var OurGroceriesClient = require('/home/thomas/git/our-groceries-client/src/our-groceries-client.js');
+var OurGroceriesClient = require('./src/our-groceries-client/our-groceries-client.js');
 
-// or import OurGroceriesClient from 'our-groceries-client' 
-const fs = require('fs') 
+// or import OurGroceriesClient from 'our-groceries-client'
+const fs = require('fs')
 const config = require('./config.json')
 
 var username = config.our_groceries.username
@@ -33,21 +33,22 @@ var todayString = today.toISOString().substr(0,10);
 var client = new OurGroceriesClient();
 
 function getList(listName) {
-    var handlers = {   
-        // Called when authentication completes, either success or failure 
+    var handlers = {
+        // Called when authentication completes, either success or failure
         authComplete: function(result) {
             if (result.success) {
                 client.getLists(handlers.getListsComplete);
             } else {
                 console.log("Authentication Failed: "+result.error);
+                console.error("result", result)
             }
         },
-        // Called when fetching the list of lists completes, either success or failure 
+        // Called when fetching the list of lists completes, either success or failure
         getListsComplete: function(result) {
             if (result.success) {
                 var list = client.findList(result.response.shoppingLists, "* " + listName);
                 if (list) {
-                    client.getList(list.id, handlers.getListComplete(listName.toLowerCase()));                
+                    client.getList(list.id, handlers.getListComplete(listName.toLowerCase()));
                 } else {
                     console.log("Unable to find list: "+listName);
                 }
@@ -55,7 +56,7 @@ function getList(listName) {
                 console.log("Unable to get lists: "+result.error);
             }
         },
-        // Called when fetching a single list completes, either success or failure 
+        // Called when fetching a single list completes, either success or failure
         getListComplete: function(filename) {
             return function(result) {
             var list = result.response.list;
@@ -64,14 +65,14 @@ function getList(listName) {
             list.items.forEach(function(item, index) {
 
                 // There can be one special list (name: config.listWithTimers)
-                // and if there are items in that list, 
+                // and if there are items in that list,
                 // then they will be automatically crossed off, and the date when the item was crossed off will be saved in the hash
                 if (listWithTimers && (listWithTimers == listName)) {
                     if (item.crossedOff) {
                         item["date"] = (oldTimers[item.id] && ("date" in oldTimers[item.id])) ? oldTimers[item.id].date : todayString;
                     } else {
                         client.crossOff(item.id, list.id, handlers.crossOffComplete);
-                        item["date"] = todayString;    
+                        item["date"] = todayString;
                     }
                     items.push(item);
 
@@ -83,9 +84,9 @@ function getList(listName) {
                 }
             })
             console.log("-------ITEMS of "+listName+"-----------")
-            console.log(items)
+            // console.log(items)
 
-            fs.writeFile('public/cal/'+filename+'.json', JSON.stringify(items), (err) => {                
+            fs.writeFile('public/cal/'+filename+'.json', JSON.stringify(items), (err) => {
                 if (err) throw err;
             })
         }},
