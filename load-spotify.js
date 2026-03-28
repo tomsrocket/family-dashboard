@@ -7,8 +7,8 @@ var client_secret = config.spotify.client_secret;
 var refresh_token = config.spotify.refresh_token;
 
 // wo dein Dashboard die Datei liest
-const OUTPUT_FILE = 'spotify.json';
-const OUTPUT_FILE_RAW = 'spotify_raw.json';
+const OUTPUT_FILE = 'public/data/spotify.json';
+const OUTPUT_FILE_RAW = 'public/data/spotify_raw.json';
 
 async function run() {
   try {

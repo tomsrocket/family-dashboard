@@ -17,11 +17,39 @@
   <body class="bg-dark text-white">
 
 <div class="container py-4">
-  <h2 class="mb-4">Zuletzt gespielt</h2>
+  <h2 class="mb-4">Spotify zuletzt gehört</h2>
   <div id="spotify-list" class="row g-3"></div>
 </div>
 <script>
 
+function getContrastColor(hex) {
+  // # entfernen
+  hex = hex.replace('#', '');
+
+  // Kurzschreibweise (#fff) erweitern
+  if (hex.length === 3) {
+    hex = hex.split('').map(c => c + c).join('');
+  }
+
+  // RGB extrahieren
+  const r = parseInt(hex.substr(0, 2), 16) / 255;
+  const g = parseInt(hex.substr(2, 2), 16) / 255;
+  const b = parseInt(hex.substr(4, 2), 16) / 255;
+
+  // Gamma-Korrektur
+  const [R, G, B] = [r, g, b].map(c =>
+    c <= 0.03928
+      ? c / 12.92
+      : Math.pow((c + 0.055) / 1.055, 2.4)
+  );
+
+  // Luminanz berechnen
+  const luminance = 0.2126 * R + 0.7152 * G + 0.0722 * B;
+
+  // Kontrastfarbe wählen
+  return luminance > 0.179 ? '#000000' : '#ffffff';
+}
+  
 async function loadSpotify() {
   try {
     const res = await fetch('data/spotify.json');
@@ -29,7 +57,14 @@ async function loadSpotify() {
 
     const container = document.getElementById('spotify-list');
     container.innerHTML = '';
+    const palettes =[
+      ["#ef476f","#ffd166","#06d6a0","#118ab2","#073b4c"],
+      ["#cdb4db","#ffc8dd","#ffafcc","#bde0fe","#a2d2ff"],
+      ["#9b5de5","#f15bb5","#fee440","#00bbf9","#00f5d4"]
+    ];
 
+    const colors = palettes[Math.floor(Math.random() * palettes.length)];
+    var color_nr = 0;
     data.forEach(track => {
       const date = new Date(track.played_at);
 
@@ -43,8 +78,12 @@ async function loadSpotify() {
       const card = document.createElement('div');
       card.className = 'col-12 col-md-6 col-lg-4';
 
+      const currentcolor = colors[color_nr];
+      const textcolor = getContrastColor(currentcolor);
+      color_nr = (color_nr + 1) % colors.length;
+
       card.innerHTML = `
-        <div class="card bg-secondary text-white h-100 shadow-sm">
+        <div style="background-color: ${currentcolor}; color: ${textcolor};" class="card h-100 shadow-sm">
           <div class="row g-0">
             <div class="col-4">
               <img src="${track.cover}" class="img-fluid rounded-start" alt="cover">
@@ -52,7 +91,7 @@ async function loadSpotify() {
             <div class="col-8">
               <div class="card-body p-2">
                 <h6 class="card-title mb-1">${track.song}</h6>
-                <p class="card-text mb-1 text-light small">${track.artist}</p>
+                <p class="card-text mb-1  small">${track.artist}</p>
                 <p class="card-text">
                   <small class="text-muted">${formattedDate}</small>
                 </p>
