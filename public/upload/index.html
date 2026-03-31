@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Foto Upload</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body style="color:white;background:#333;font-family:Verdana, sans-serif">
+  <center>
+<img src="/upload/icon-192.png" style="max-width:200px;border-radius:10px" alt="Icon" width="100%">
+  <h2>Foto hochladen</h2>
+
+  <form id="uploadForm" action="upload.php" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" id="fileInput" accept="image/*">
+  </form>
+
+  <script>
+    const input = document.getElementById("fileInput");
+
+    // Wenn über "Teilen" geöffnet → Datei kommt automatisch rein
+    input.addEventListener("change", () => {
+      document.getElementById("uploadForm").submit();
+    });
+
+    // Fallback: manuelles Auswählen
+    if (!input.files.length) {
+      input.click();
+    }
+  </script>
+</body>
+</html>
