@@ -44,6 +44,40 @@
       background-color:#333;
     }
 
+    /* Latest images scroller */
+    .carouseli {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .carouseli .track {
+      display: block;
+      width: 10000px;
+      transition: transform 0.1s linear;
+      border-radius: 10px;
+      animation: scroll 120s linear infinite;
+    }
+
+    .carouseli .track img {
+      width: 200px;        /* 5 Bilder sichtbar */
+      height: 200px;     /* anpassen */
+      padding:0 10px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .carouseli {
+      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    }
+    @keyframes scroll {
+      from {
+        transform: translateX(0);
+      }
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* Kalender CSS */
     .weekend {
       background-image: linear-gradient(45deg, #B2A2CD 25%, #5F5370 25%, #5F5370 50%, #B2A2CD 50%, #B2A2CD 75%, #5F5370 75%, #5F5370 100%);
       background-size: 56.57px 56.57px;
@@ -94,6 +128,8 @@
       top: 12%;
       left: 50%;
     }
+
+    /* Stundenplan CSS */ 
     .stundenplan .notification {
       padding:5px 1rem;
     }

@@ -456,6 +456,42 @@ class Countdowns {
     }
 }
 
+class ImageScroller {
+  static start() {
+    let images = [];
+    let position = 0;
+    const speed = 0.2; // px pro frame (anpassen)
+
+    async function loadImages() {
+      const res = await fetch('/upload/imagelist.php?cachebusting=' + new Date().getTime());
+      const data = await res.json();
+
+      // nur die neuesten 20
+      images = data.slice(0, 20);
+
+      const track = document.getElementById("track");
+      track.innerHTML = "";
+
+      images.forEach(img => {
+        const el = document.createElement("img");
+        el.src = img.url;
+        track.appendChild(el);
+      });
+
+      // für smooth loop: nochmal anhängen
+      images.forEach(img => {
+        const el = document.createElement("img");
+        el.src = img.url;
+        track.appendChild(el);
+      });
+    }
+    loadImages();
+    // alle 60s neue Bilder laden
+    setInterval(loadImages, 60000);
+  }
+}
+
+
 $(async function() {
     console.log( "ready!" );
     BigClockDisplay.start();
@@ -470,6 +506,7 @@ $(async function() {
     Countdowns.start(countdownEvents);
     DailyImage.start();
     DailyJoke.start();
+    ImageScroller.start();
     initButtons(function() {window.location.href = "page3.html";}, 
       function() {window.location.href = "page2.html";}
     )
