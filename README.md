@@ -121,6 +121,37 @@ Images used for the TODO-List
 * Icons: helmet, face-mask: Icon made by Freepik from www.flaticon.com - https://www.flaticon.com/free-icon/vifking-helmet_499260
 * Other icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
+# Photos Feed
+
+
+## Photo Upload per "Share" Funktion vom Handy
+
+**"Photo Upload"-App auf dem Handy installieren**
+* Die Seite https://domain.test/upload auf dem Handy abrufen. 
+* Drei Punkte oben rechts, "zu Homebildschirm hinzufügen"
+* Wichtig: Dann "Installieren" auswählen, *nicht* "zum Homebildschirm hinzufügen"
+* Die Webseite wird als App in der "Share" Funktion vom Handy installiert. Mega geil.
+
+**Server config**\
+Im Apache2 Vhost die Upload Max size einstellen damit die handy fotos hochgeladen werden können: 
+```bash
+<Directory /whatever/the/app>
+        php_value upload_max_filesize 24M
+</Directory>
+```
+
+* Icon Generator für PWA Progressive Web App Icons: https://icon.kitchen
+
+## Google Photos
+DEPRECATED, machen wir nicht. Über die Google API kann man unkompliziert inzwischen nur von der API angelegte Bilder abrufen, das macht ja überhaupt keinen Sinn.
+
+Für Google Photos API:
+* Gehe zu: https://console.cloud.google.com/
+* Neues Projekt erstellen
+* Photos Library API aktivieren
+* OAuth Client erstellen: Typ: „Desktop App“
+* credentials.json herunterladen
+
 
 # Read spotify songs
 
