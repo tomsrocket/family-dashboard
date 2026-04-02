@@ -52,21 +52,20 @@
 
     .carouseli .track {
       display: block;
-      width: 10000px;
       transition: transform 0.1s linear;
-      border-radius: 10px;
       animation: scroll 120s linear infinite;
+      height:200px;
     }
-
     .carouseli .track img {
       width: 200px;        /* 5 Bilder sichtbar */
       height: 200px;     /* anpassen */
-      padding:0 10px;
+      margin:0 10px;
       object-fit: cover;
       border-radius: 8px;
+      background-color:#333;
     }
     .carouseli {
-      mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
     }
     @keyframes scroll {
       from {
@@ -148,4 +147,14 @@
         text-align: center;
         border-radius: 3px;
         margin: -4px -15px 7px -15px;
+    }
+
+    .nav-item {
+      padding: 5px 10px;
+      background-color: black;
+      margin: 0 10px 0 0;
+    }
+    .nav-item.is-active {
+      background-color: white;
+      color: black;
     }

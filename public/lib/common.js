@@ -1,5 +1,5 @@
 
-function initButtons(fn_back, fn_next, btn_back=null, btn_next=null) {
+function initButtons(fn_back, fn_next, fn_center=null, btn_back=null, btn_next=null, btn_center=null) {
 
   if (btn_back) {
     btn_back.addEventListener('click', () => fn_back());
@@ -7,10 +7,14 @@ function initButtons(fn_back, fn_next, btn_back=null, btn_next=null) {
   if (btn_next) {
     btn_next.addEventListener('click', () => fn_next());
   }
+  if (btn_center) {
+    btn_center.addEventListener('click', () => fn_center());
+  }
 
   window.addEventListener('keydown', (e) => {
     if (e.key === '1') fn_back();
     if (e.key === '2') fn_next();
+    if (e.key === '3' && fn_center) fn_center();
   });
 
   // Joystick/Gamepad support
@@ -35,6 +39,8 @@ function initButtons(fn_back, fn_next, btn_back=null, btn_next=null) {
             fn_back();
           } else if (b === 1) { // Joystick Button #2
             fn_next();
+          } else if (b === 2 && fn_center) { // Joystick Button #3
+            fn_center();
           }
         }
       }

@@ -459,8 +459,6 @@ class Countdowns {
 class ImageScroller {
   static start() {
     let images = [];
-    let position = 0;
-    const speed = 0.2; // px pro frame (anpassen)
 
     async function loadImages() {
       const res = await fetch('/upload/imagelist.php?cachebusting=' + new Date().getTime());
@@ -468,9 +466,10 @@ class ImageScroller {
 
       // nur die neuesten 20
       images = data.slice(0, 20);
-
+      const divwidth = (images.length * 220) * 2;
       const track = document.getElementById("track");
       track.innerHTML = "";
+      track.style.width = divwidth + "px";
 
       images.forEach(img => {
         const el = document.createElement("img");
@@ -478,8 +477,8 @@ class ImageScroller {
         track.appendChild(el);
       });
 
-      // für smooth loop: nochmal anhängen
-      images.forEach(img => {
+      // für smooth loop: nochmal 5 anhängen
+      images.slice(0, 5).forEach(img => {
         const el = document.createElement("img");
         el.src = img.url;
         track.appendChild(el);
@@ -491,6 +490,50 @@ class ImageScroller {
   }
 }
 
+class NavLinks {
+  static currentLink = 0;
+  static links = [
+    {name: "Dashboard", url: "index.html"},
+    {name: "Pixel", url: "https://tomsrocket.github.io/pixel-gfx-viewer/"},
+    {name: "Musik", url: "page2.html"},
+    {name: "???", url: "page3.html"},
+  ];
+  static start() {
+    const container = document.getElementById("navLinks");
+    var linkNr = 0;
+    this.links.forEach(link => {
+      const el = document.createElement("a");
+      el.href = link.url;
+      el.className = "nav-item";
+      el.id = "nav-" + linkNr++;
+      el.textContent = link.name;
+      container.appendChild(el);
+    });
+    this.highlightCurrent();
+  }
+  static highlightCurrent() {
+    // highlight selected link
+    this.links.forEach((link, index) => {
+      const el = document.getElementById("nav-" + index);
+      if (index === this.currentLink) {
+        el.classList.add("is-active");
+      } else {
+        el.classList.remove("is-active");
+      }
+    });
+  }
+  static selectNext() {
+    this.currentLink = (this.currentLink + 1) % this.links.length;
+    this.highlightCurrent();
+  } 
+  static selectPrevious() {
+    this.currentLink = (this.currentLink - 1 + this.links.length) % this.links.length;
+    this.highlightCurrent();
+  }
+  static gotoLink() {
+    window.location.href = this.links[this.currentLink].url;
+  }
+}
 
 $(async function() {
     console.log( "ready!" );
@@ -507,7 +550,9 @@ $(async function() {
     DailyImage.start();
     DailyJoke.start();
     ImageScroller.start();
-    initButtons(function() {window.location.href = "page3.html";}, 
-      function() {window.location.href = "page2.html";}
+    NavLinks.start();
+    initButtons(function() {NavLinks.selectNext();}, 
+      function() {NavLinks.selectPrevious();},
+      function() {NavLinks.gotoLink();}
     )
 });
