@@ -461,7 +461,8 @@ class ImageScroller {
     let images = [];
 
     async function loadImages() {
-      const res = await fetch('/upload/imagelist.php?cachebusting=' + new Date().getTime());
+      const imageurl = new URL('/upload/imagelist.php', window.location.origin);
+      const res = await fetch(imageurl.href);
       const data = await res.json();
 
       // nur die neuesten 20

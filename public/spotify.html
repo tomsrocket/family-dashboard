@@ -52,7 +52,8 @@ function getContrastColor(hex) {
   
 async function loadSpotify() {
   try {
-    const res = await fetch('data/spotify.json');
+    const url = new URL('data/spotify.json', window.location.origin);
+    const res = await fetch(url.href);
     const data = await res.json();
 
     const container = document.getElementById('spotify-list');
